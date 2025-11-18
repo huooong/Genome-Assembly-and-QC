@@ -1,4 +1,4 @@
-# Soil Bacteria Genome Analysis – 7th Semester Project
+# Soil Bacteria Genome Analysis
 
 This repository contains the data processing workflow used in a 7th semester biotechnology project focused on characterizing soil-derived bacterial isolates and exploring their potential for antibiotic production.  
 The analyses include read quality assessment, filtering, genome assembly, polishing, and assembly evaluation.
@@ -12,6 +12,7 @@ Currently the repository includes:
 - `P7_script.sh` – A full analysis pipeline from raw Nanopore reads to assembled and polished genomes.
 
 As the project develops, the following folders may be added:
+
 /data/ # Raw and processed sequencing data
 /results/ # NanoPlot, assemblies, polished genomes, QUAST reports
 /scripts/ # Modular shell scripts (if workflow is split)
