@@ -1,7 +1,6 @@
-# Soil Bacteria Genome Analysis
+# Genome Assembly and Analysis of Soil Bacteria
 
-This repository contains the data processing workflow used in a 7th semester biotechnology project focused on characterizing soil-derived bacterial isolates and exploring their potential for antibiotic production.  
-The analyses include read quality assessment, filtering, genome assembly, polishing, and assembly evaluation.
+This repository contains the data processing workflow used in our 7th semester project titled 'Identification of Next Generation Antibiotics with Genome Mining', focused on characterizing soil-derived bacterial isolates and exploring their potential for antibiotic production.  
 
 ---
 
@@ -13,9 +12,9 @@ Currently the repository includes:
 
 As the project develops, the following folders may be added:
 
-/data/ # Raw and processed sequencing data
-/results/ # NanoPlot, assemblies, polished genomes, QUAST reports
-/scripts/ # Modular shell scripts (if workflow is split)
+%/data/ # Raw and processed sequencing data
+%/results/ # NanoPlot, assemblies, polished genomes, QUAST reports
+%/scripts/ # Modular shell scripts (if workflow is split)
 
 
 ---
