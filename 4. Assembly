@@ -4,43 +4,30 @@
 INPUT_DIR="Data"
 OUTPUT_DIR="Results"
 FILTERED_DIR="$OUTPUT_DIR/Filtered"
-ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
 
-# Polishing using Racon
-echo "STEP 5: Polishing assemblies with Racon"
+# Assembling of sequencing data
+echo "STEP 4: Assembling sequenced data using Flye Assembler"
 
 ## Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
-##Create directory for polished assemblies
-POLISH_DIR="$OUTPUT_DIR/Polished"
-mkdir -p "$POLISH_DIR"
+##Load Flye environment
+conda activate flye_env
 
-for assembly_folder in "$ASSEMBLY_DIR"/*; do
-    sample=$(basename "$assembly_folder")
-    assembly="$assembly_folder/assembly.fasta"
-    reads="$FILTERED_DIR/${sample}_filtered.fastq"
+##Create directory for assembly
+ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
+mkdir -p "$ASSEMBLY_DIR"
 
-    echo "Polishing $sample ..."
+##Flye parameters
+GENOME_SIZE="5m"
+THREADS=4
 
-    ##Map reads back to the assembly
-    conda activate minimap2
-    minimap2 -x map-ont -t "$THREADS" "$assembly" "$reads" > "$POLISH_DIR/${sample}_aln.sam"
-    conda deactivate
-    
-
-    ##Sort and index alignment
-    conda activate samtools_env
-    samtools sort "$POLISH_DIR/${sample}_aln.sam" -o "$POLISH_DIR/${sample}_aln_sorted.bam"
-    samtools index "$POLISH_DIR/${sample}_aln_sorted.bam"
-    conda deactivate
-    
-
-    ##Polish with Racon
-    conda activate racon_env
-    racon -t "$THREADS" "$reads" "$POLISH_DIR/${sample}_aln.sam" "$assembly" > "$POLISH_DIR/${sample}_racon.fasta"
-    conda deactivate
-    
-    echo "$sample polished assembly saved at $POLISH_DIR/${sample}_racon.fasta"
+##Run flye
+for file in "$FILTERED_DIR"/*_filtered.fastq; do
+	sample=$(basename "$file" _filtered.fastq)
+	echo "Assembling $sample..."
+flye --nano-raw "$file" --genome-size "$GENOME_SIZE" --out-dir "$ASSEMBLY_DIR/$sample" --threads "$THREADS"
 done
+conda deactivate
+echo "Assemblies saved in $ASSEMBLY_DIR"
