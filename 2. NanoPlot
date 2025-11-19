@@ -1,1 +1,24 @@
+# Run NanoPlot
+echo "STEP 2: Assessing quality with NanoPlot"
 
+##Input and output directory
+INPUT_DIR="Data"
+OUTPUT_DIR="Results"
+
+## Load conda commands (***)
+source /usr/local/Miniforge3-25.3.1-0-Linux-x86_64/etc/profile.d/conda.sh
+
+##Load NanoPlot environment
+conda activate nanoplot2
+
+##Create directory for NanoPlot Results
+NANOPLOT_OUT="$OUTPUT_DIR/NanoPlot"
+mkdir -p "$NANOPLOT_OUT"
+
+for file in "$INPUT_DIR"/*.fastq; do
+    sample=$(basename "$file" .fastq)
+    echo "Running NanoPlot on $sample..."
+    NanoPlot --fastq "$file" -o "$NANOPLOT_OUT" --prefix "$sample" --tsv_stats --raw
+done
+conda deactivate
+echo "NanoPlot results have been saved in $NANOPLOT_OUT"
