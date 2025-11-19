@@ -10,13 +10,7 @@ Currently the repository includes:
 
 - `P7_script.sh` – A full analysis pipeline from raw Nanopore reads to assembled and polished genomes.
 
-As the project develops, the following folders may be added:
-
-%/data/ # Raw and processed sequencing data
-%/results/ # NanoPlot, assemblies, polished genomes, QUAST reports
-%/scripts/ # Modular shell scripts (if workflow is split)
-
-
+As the project develops, the following folders may be added.
 ---
 
 ## Workflow Overview
@@ -47,14 +41,17 @@ The pipeline performs the following steps:
 ---
 
 ## How to Run the Pipeline
+Make sure to start in the P7 directory
+```bash
+cd P7
+```
 
 Place your FASTQ files in:
 P7/Data/
 
-
 Then run:
 ```bash
-bash P7_script.sh
+P7_script.sh
 ```
 
 Results will be saved in:
