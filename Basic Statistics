@@ -1,1 +1,28 @@
+#!/bin/bash
 
+#Input and output directory (CORRECT THIS IF NEEDED)
+INPUT_DIR="P7/Data"
+OUTPUT_DIR="P7/Results"
+
+#Basic Statistics on the Sequencing Data
+echo "STEP 1: Counting reads, bases and average read length"
+
+for file in "$INPUT_DIR"/*.fastq; do
+    sample=$(basename "$file" .fastq)
+    echo "Processing $sample..."
+
+    ## Count reads
+    reads=$(awk '{s++} END{print s/4}' "$file")
+
+    ## Count bases
+    bases=$(awk 'NR%4==2 {bases+=length($0)} END{print bases}' "$file")
+
+    ## Average read length
+    avg_length=$(awk 'NR%4==2 {bases+=length($0); reads++} END{print bases/reads}' "$file")
+
+    ## Print results
+    echo " Reads: $reads"
+    echo " Bases: $bases"
+    echo " Average read length: $avg_length"
+    echo "-------------------------------------"
+done
