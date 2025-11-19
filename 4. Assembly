@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#Input and output directory (CORRECT THIS IF NEEDED)
+INPUT_DIR="P7/Data"
+OUTPUT_DIR="Results"
+FILTERED_DIR="$OUTPUT_DIR/Filtered"
+
+# Assembling of sequencing data
+echo "STEP 4: Assembling sequenced data using Flye Assembler"
+
+## Load conda commands
+source /usr/local/Miniforge3-25.3.1-0-Linux-x86_64/etc/profile.d/conda.sh
+
+##Load Flye environment
+conda activate flye_env
+
+##Create directory for assembly
+ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
+mkdir -p "$ASSEMBLY_DIR"
+
+##Flye parameters
+GENOME_SIZE="5m"
+THREADS=4
+
+##Run flye
+for file in "$FILTERED_DIR"/*_filtered.fastq; do
+	sample=$(basename "$file" _filtered.fastq)
+	echo "Assembling $sample..."
+flye --nano-raw "$file" --genome-size "$GENOME_SIZE" --out-dir "$ASSEMBLY_DIR/$sample" --threads "$THREADS"
+done
+conda deactivate
+echo "Assemblies saved in $ASSEMBLY_DIR"
