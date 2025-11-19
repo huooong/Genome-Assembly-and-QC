@@ -59,6 +59,9 @@ Then run:
 ```bash
 file_name.sh
 ```
+
+---
+
 ### Conda Environments
 Conda environments allow you to create isolated spaces with specific packages and versions, avoiding conflicts between projects.
 
@@ -69,28 +72,30 @@ conda create -n nanoplot2 -c bioconda nanoplot
 ```
 *Filtlong*
 ```bash
-conda create -n nanoplot2 -c bioconda nanoplot
+conda create -n filtlong_env -c bioconda filtlong
 ```
 *Flye*
 ```bash
-conda create -n nanoplot2 -c bioconda nanoplot
+conda create -n flye_env -c bioconda flye
 ```
 *minimap2*
 ```bash
-conda create -n nanoplot2 -c bioconda nanoplot
+conda create -n minimap2 -c bioconda minimap2
 ```
 *samtools*
 ```bash
-conda create -n nanoplot2 -c bioconda nanoplot
+conda create -n samtools_env -c bioconda samtools
 ```
 *racon*
 ```bash
-conda create -n nanoplot2 -c bioconda nanoplot
+conda create -n racon_env -c bioconda racon=1.4.2
 ```
 *QUAST*
 ```bash
-conda create -n nanoplot2 -c bioconda nanoplot
+conda create -n quast_env -c bioconda quast
 ```
+
+---
 
 ### Conda Environment Activation Issue
 When running scripts inside VS Code or Code-Server using the "Run Active File" feature, you might encounter an error like:
@@ -105,6 +110,8 @@ CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 ```
 Before activating conda environment
+
+---
 
 ## Directories
 
