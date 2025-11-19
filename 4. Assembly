@@ -9,7 +9,8 @@ FILTERED_DIR="$OUTPUT_DIR/Filtered"
 echo "STEP 4: Assembling sequenced data using Flye Assembler"
 
 ## Load conda commands
-source /usr/local/Miniforge3-25.3.1-0-Linux-x86_64/etc/profile.d/conda.sh
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 ##Load Flye environment
 conda activate flye_env
