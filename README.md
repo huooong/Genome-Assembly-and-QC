@@ -8,9 +8,11 @@ This repository contains the data processing workflow used in our 7th semester p
 
 Currently the repository includes:
 
-- `P7_script.sh` – A full analysis pipeline from raw Nanopore reads to assembled and polished genomes.
+- `0. Full Script` – A full analysis pipeline from raw Nanopore reads to assembled and polished genomes.
+- `1. Basic Statistics`
+- `2. NanoPlot`
 
-As the project develops, the following folders may be added.
+As the project develops, more files and folders may be added.
 ---
 
 ## Workflow Overview
@@ -41,6 +43,11 @@ The pipeline performs the following steps:
 ---
 
 ## How to Run the Pipeline
+When a file is run for the first time, run this code in the Terminal.
+```bash
+chmod +x file.sh
+````
+
 Make sure to start in the P7 directory
 ```bash
 cd P7
@@ -51,11 +58,11 @@ P7/Data/
 
 Then run:
 ```bash
-P7_script.sh
+file.sh
 ```
 
 Results will be saved in:
-P7/Results/
+P7/Results/*
 
 ---
 
@@ -69,6 +76,9 @@ This pipeline expects the following tools to be installed, ideally through conda
 - racon
 - QUAST
 
+---
+
+## Conda
 
 
 
