@@ -76,9 +76,44 @@ This pipeline expects the following tools to be installed, ideally through conda
 - racon
 - QUAST
 
+### Conda Environments
+Conda environments allow you to create isolated spaces with specific packages and versions, avoiding conflicts between projects.
+
+To create the needed environments: 
+
+
+### Conda Environment Activation Issue
+When running scripts inside VS Code or Code-Server using the "Run Active File" feature, you might encounter an error like:
+```
+CondaError: Run 'conda init' before 'conda activate'
+```
+This happens because VS Code runs script in a non-interactive shell. 
+
+To fix it, add:
+```bash
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+conda activate your_env_name
+```
+
 ---
 
-## Conda
+## Resources
+Nanoplot:
+- https://github.com/wdecoster/NanoPlot
+  
+Filtlong:
+- https://github.com/rrwick/Filtlong
+
+Flye:
+- https://github.com/mikolmogorov/Flye
+
+Racon:
+- https://github.com/isovic/racon
+
+QUAST:
+- https://github.com/ablab/quast
+
 
 
 
