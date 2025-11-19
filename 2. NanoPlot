@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Run NanoPlot
 echo "STEP 2: Assessing quality with NanoPlot"
 
