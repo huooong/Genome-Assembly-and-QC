@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Input and output directory (CORRECT THIS IF NEEDED)
-INPUT_DIR="P7/Data"
+INPUT_DIR="Data"
 OUTPUT_DIR="Results"
 FILTERED_DIR="$OUTPUT_DIR/Filtered"
 
