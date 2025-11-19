@@ -7,8 +7,9 @@ This repository contains the data processing workflow used in our 7th semester p
 ## Repository Contents
 
 Currently the repository includes:
+- `0. Full Script` – A combined full analysis pipeline from raw Nanopore reads to assembled and polished genomes.
 
-- `0. Full Script` – A full analysis pipeline from raw Nanopore reads to assembled and polished genomes.
+The scripts listed below are structured to allow each processing step to be run separately:
 - `1. Basic Statistics`
 - `2. NanoPlot`
 
@@ -18,7 +19,6 @@ As the project develops, more files and folders may be added.
 ## Workflow Overview
 
 The pipeline performs the following steps:
-
 1. **Basic statistics on raw FASTQ reads**  
    - Counting reads, bases, and calculating average read length.
 
