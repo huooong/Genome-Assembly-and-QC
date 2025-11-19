@@ -14,13 +14,13 @@ source /usr/local/Miniforge3-25.3.1-0-Linux-x86_64/etc/profile.d/conda.sh
 conda activate nanoplot2
 
 ##Create directory for NanoPlot Results
-NANOPLOT_OUT="$OUTPUT_DIR/NanoPlot"
-mkdir -p "$NANOPLOT_OUT"
+NANOPLOT_DIR="$OUTPUT_DIR/NanoPlot"
+mkdir -p "$NANOPLOT_DIR"
 
 for file in "$INPUT_DIR"/*.fastq; do
     sample=$(basename "$file" .fastq)
     echo "Running NanoPlot on $sample..."
-    NanoPlot --fastq "$file" -o "$NANOPLOT_OUT" --prefix "$sample" --tsv_stats --raw
+    NanoPlot --fastq "$file" -o "$NANOPLOT_DIR" --prefix "$sample" --tsv_stats --raw
 done
 conda deactivate
-echo "NanoPlot results have been saved in $NANOPLOT_OUT"
+echo "NanoPlot results have been saved in $NANOPLOT_DIR"
