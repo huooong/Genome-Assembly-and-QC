@@ -10,8 +10,8 @@ The repository currently contains the following scripts and directories:
 - `0. Full Script`: A comprehensive pipeline script that automates the entire analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
 
 The following modular scripts allow you to run each data processing step independently, facilitating troubleshooting, customization, and iterative analysis:
-- `1. Basic Statistics`: Generate Basic sequencing statistics such as read counts, read length distribution, and total bases.
-- `2. NanoPlot`: Visualise sequence run quality and read metrics using NanoPlot. 
+- `1. Basic Statistics`: Generate Basic sequencing statistics such as read counts, total bases, and average read length.
+- `2. NanoPlot`: Visualise sequence run quality using NanoPlot. 
 - `3. Filtering`: Filter raw reads based on quality and length thresholds to improve assembly quality.
 - `4. Assembly`: Assemble filtered reads into draft genomes using assembly tools optimised for Nanopore data.
 - `5. Polishing`: Improve assembly accuracy by iterative error correction with long reads.
