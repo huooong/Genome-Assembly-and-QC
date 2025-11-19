@@ -1,8 +1,12 @@
 #!/bin/bash
 
-#Input and output directory (CORRECT THIS IF NEEDED)
-INPUT_DIR="P7/Data"
-OUTPUT_DIR="P7/Results"
+# Input and output directory
+INPUT_DIR="Data"
+OUTPUT_DIR="Results"
+
+# Load conda commands
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 #Basic Statistics on the Sequencing Data
 echo "STEP 1: Counting reads, bases and average read length"
@@ -27,6 +31,7 @@ for file in "$INPUT_DIR"/*.fastq; do
     echo "-------------------------------------"
 done
 
+
 # Run NanoPlot
 echo "STEP 2: Assessing quality with NanoPlot"
 
@@ -34,16 +39,17 @@ echo "STEP 2: Assessing quality with NanoPlot"
 conda activate nanoplot2
 
 ##Create directory for NanoPlot Results
-NANOPLOT_OUT="$OUTPUT_DIR/NanoPlot"
-mkdir -p "$NANOPLOT_OUT"
+NANOPLOT_DIR="$OUTPUT_DIR/NanoPlot"
+mkdir -p "$NANOPLOT_DIR"
 
 for file in "$INPUT_DIR"/*.fastq; do
     sample=$(basename "$file" .fastq)
     echo "Running NanoPlot on $sample..."
-    NanoPlot --fastq "$file" -o NanoPlot --prefix "$sample" --tsv_stats --raw
+    NanoPlot --fastq "$file" -o "$NANOPLOT_DIR" --prefix "$sample" --tsv_stats --raw
 done
 conda deactivate
 echo "NanoPlot results have been saved in $NANOPLOT_DIR"
+echo "-------------------------------------"
 
 # Filter reads using Filtlong
 echo "STEP 3: Filtering reads using Filtlong"
@@ -63,6 +69,7 @@ for file in "$INPUT_DIR"/*.fastq; do
 done
 conda deactivate
 echo "All files have been filtered. Filtered reads have been saved in $FILTERED_DIR"
+echo "-------------------------------------"
 
 # Assembling of sequencing data
 echo "STEP 4: Assembling sequenced data using Flye Assembler"
@@ -72,7 +79,7 @@ conda activate flye_env
 
 ##Create directory for assembly
 ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
-mkdir -p "ASSEMBLY_DIR"
+mkdir -p "$ASSEMBLY_DIR"
 
 ##Flye parameters
 GENOME_SIZE="5m"
@@ -80,12 +87,13 @@ THREADS=4
 
 ##Run flye
 for file in "$FILTERED_DIR"/*_filtered.fastq; do
-	sample=$(basename "$file"_filtered.fastq)
+	sample=$(basename "$file" _filtered.fastq)
 	echo "Assembling $sample..."
-flye --nano-raw "$file" --genome-size "$GENOME_SIZE" --out-dir "ASSEMBLY_DIR/$sample" --threads "$THREADS"
+flye --nano-raw "$file" --genome-size "$GENOME_SIZE" --out-dir "$ASSEMBLY_DIR/$sample" --threads "$THREADS"
 done
 conda deactivate
-echo “Assemblies saved in $ASSEMBLY_DIR”
+echo "Assemblies saved in $ASSEMBLY_DIR"
+echo "-------------------------------------"
 
 # Polishing using Racon
 echo "STEP 5: Polishing assemblies with Racon"
@@ -121,15 +129,17 @@ for assembly_folder in "$ASSEMBLY_DIR"/*; do
     
     echo "$sample polished assembly saved at $POLISH_DIR/${sample}_racon.fasta"
 done
+echo "-------------------------------------"
 
 # Run QUAST on output
 echo "STEP 6: Assessing assembly quality with QUAST"
+
+##Load QUAST environment
 conda activate quast_env
 
 ##Create directory for QUAST
-QUAST_OUT="$OUTPUT_DIR/QUAST"
-mkdir -p "$QUAST_OUT"
-
+QUAST_DIR="$OUTPUT_DIR/QUAST"
+mkdir -p "$QUAST_DIR"
 #Run QUAST 
 for folder in "$ASSEMBLY_DIR"/*; do
     [ -d "$folder" ] || continue
@@ -141,10 +151,10 @@ for folder in "$ASSEMBLY_DIR"/*; do
     echo "Running QUAST for $sample ..."
     quast.py \
         "$raw_assembly" "$polished_assembly" \
-        -o "$QUAST_OUT/${sample}" \
+        -o "$QUAST_DIR/${sample}" \
         -l "${sample}_raw,${sample}_racon" \
         --threads "$THREADS"
 done
 
 conda deactivate
-echo "QUAST reports saved in: $QUAST_OUT"
+echo "QUAST reports saved in: $QUAST_DIR"
