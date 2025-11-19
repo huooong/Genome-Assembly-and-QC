@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#Input and output directory
+INPUT_DIR="Data"
+OUTPUT_DIR="Results"
+
+# Filter reads using Filtlong
+echo "STEP 3: Filtering reads using Filtlong"
+
+##Load Filtlong environment
+conda activate filtlong_env
+
+##Directory for filtered results
+FILTERED_DIR="$OUTPUT_DIR/Filtered"
+mkdir -p "$FILTERED_DIR"
+
+for file in "$INPUT_DIR"/*.fastq; do
+    sample=$(basename "$file" .fastq)
+    echo "Filtering $file ..."
+
+    filtlong --min_length 1000 --keep_percent 90 "$file" > "${FILTERED_DIR}/${sample}_filtered.fastq"
+done
+conda deactivate
+echo "All files have been filtered. Filtered reads have been saved in $FILTERED_DIR"
