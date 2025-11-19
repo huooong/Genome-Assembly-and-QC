@@ -8,7 +8,9 @@ OUTPUT_DIR="Results"
 echo "STEP 3: Filtering reads using Filtlong"
 
 ## Load conda commands
-source /usr/local/Miniforge3-25.3.1-0-Linux-x86_64/etc/profile.d/conda.sh
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+
 
 ##Load Filtlong environment
 conda activate filtlong_env
