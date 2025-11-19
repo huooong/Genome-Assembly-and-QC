@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#Input and output directory (CORRECT THIS IF NEEDED)
-INPUT_DIR="P7/Data"
-OUTPUT_DIR="P7/Results"
+#Input and output directory
+INPUT_DIR="Data"
+OUTPUT_DIR="Results"
 
 #Basic Statistics on the Sequencing Data
 echo "STEP 1: Counting reads, bases and average read length"
