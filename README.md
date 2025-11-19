@@ -13,9 +13,9 @@ The following modular scripts allow you to run each data processing step indepen
 - `1. Basic Statistics`: Generate Basic sequencing statistics such as read counts, total bases, and average read length.
 - `2. NanoPlot`: Visualise sequence run quality using NanoPlot. 
 - `3. Filtering`: Filter raw reads based on quality and length thresholds to improve assembly quality.
-- `4. Assembly`: Assemble filtered reads into draft genomes using assembly tools optimised for Nanopore data.
+- `4. Assembly`: Assemble filtered reads into draft genomes using Flye optimised for Nanopore data.
 - `5. Polishing`: Improve assembly accuracy by iterative error correction with long reads.
-- `6. Quality of Assembly`: Evaluate assembly quality metrics (e.g., N50, completeness) using tools such as QUAST.
+- `6. Quality of Assembly`: Evaluate assembly quality metrics using QUAST.
 
 As the project develops, more files and folders may be added.
 
@@ -25,7 +25,7 @@ As the project develops, more files and folders may be added.
 
 The pipeline performs the following steps:
 1. **Basic statistics on raw FASTQ reads**  
-   - Counting reads, bases, and calculating average read length.
+   - Counting reads, total bases, and calculating average read length.
 
 2. **Quality assessment using NanoPlot**
 
@@ -43,12 +43,11 @@ The pipeline performs the following steps:
    - Racon polishing
 
 6. **Assembly quality assessment with QUAST**  
-   - Comparing raw Flye assembly and Racon-polished assembly
 
 ---
 
 ## How to Run the Pipeline
-When a file is run for the first time, run this code in the Terminal.
+When a file is run for the first time, run this code in the Terminal
 ```bash
 chmod +x file.sh
 ````
@@ -65,9 +64,10 @@ Then run:
 ```bash
 file.sh
 ```
+---
 
-Results will be saved in:
-P7/Results/*
+## Directories
+
 
 ---
 
