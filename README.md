@@ -93,8 +93,8 @@ To fix it, add:
 ```bash
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
-conda activate your_env_name
 ```
+Before activating conda environment
 
 ---
 
