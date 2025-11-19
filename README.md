@@ -1,6 +1,6 @@
 # Genome Assembly and Analysis of Soil Bacteria
 
-This repository contains the data processing workflow used in our 7th semester project titled 'Identification of Next Generation Antibiotics with Genome Mining', focused on characterizing soil-derived bacterial isolates and exploring their potential for antibiotic production.  
+This repository contains the data processing workflow used in our 7th semester project titled 'Identification of Next Generation Antibiotics using Genome Mining Tools', focused on characterizing soil-derived bacterial isolates and exploring their potential for antibiotic production.  
 
 ---
 
@@ -12,6 +12,10 @@ Currently the repository includes:
 The scripts listed below are structured to allow each processing step to be run separately:
 - `1. Basic Statistics`
 - `2. NanoPlot`
+- `3. Filtering`
+- `4. Assembly`
+- `5. Polishing`
+- `6. Quality of Assembly`
 
 As the project develops, more files and folders may be added.
 ---
