@@ -3,62 +3,81 @@ This repository contains the data processing workflow developed as part of our 7
 
 The pipeline is designed to process raw sequencing data, perform quality assessments, assemble genomes, polish assemblies, and evaluate final assembly quality.
 
+
 ---
+
 
 ## Repository Contents
 The repository currently contains the following scripts and directories:
 - `0. Full Script`: A comprehensive pipeline script that automates the entire analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
 
 The following modular scripts allow you to run each data processing step independently:
-- `1. Basic Statistics`: Generate basic sequencing statistics such as read counts, total bases, and average read length of each sample.
-- `2. NanoPlot`: Visualise sequence run quality using NanoPlot. 
-- `3. Filtering`: Filter raw reads based on quality and length thresholds to improve assembly quality.
-- `4. Assembly`: Assemble filtered reads into draft genomes using Flye optimised for Nanopore data.
-- `5. Polishing`: Improve assembly accuracy by iterative error correction with long reads.
-- `6. Quality of Assembly`: Evaluate assembly quality metrics using QUAST.
+- `1. Basic Statistics`
+- `2. NanoPlot`
+- `3. Filtering`
+- `4. Assembly`
+- `5. Polishing`
+- `6. Quality of Assembly`
 
 As the project develops, more files and folders may be added.
 
+
 ---
+
 
 ## Workflow Overview
 The pipeline performs the following steps:
 1. **Basic statistics on raw FASTQ reads**  
-   - Counting reads, bases, and calculating average read length.
+   - Generate basic sequencing statistics such as read counts, total bases, and average read length of each sample.
 
 2. **Quality assessment using NanoPlot**
+   - Gives summary statistics and plots describing the quality of input data prior to analysis.
+   - Plots that are generated, include:
+      - Weighted and non-weighted histogram of read lengths.
+      - Length vs. Quality scatter plot.
+      - Yield by length plot.
 
 4. **Read filtering using Filtlong**  
-   - Minimum read length: 1000 bp  
-   - Keep top 90% highest-quality reads
+   - Filter raw reads based on quality and length thresholds to improve assembly quality.
+      - Minimum read length: 1000 bp.  
+      - Keep top 90% highest-quality reads.
 
 5. **Genome assembly with Flye**  
-   - Using filtered Nanopore reads  
-   - Genome size set to 5 Mb
+   - Using filtered Nanopore reads.  
+   - Genome size set to 5 Mb.
+   - Threads set to 4.
 
 6. **Polishing assemblies using Racon**  
-   - Mapping reads with minimap2  
-   - Sorting/indexing with Samtools  
-   - Racon polishing
+   - Mapping reads with minimap2.  
+   - Sorting/indexing with Samtools.  
+   - Racon polishing.
 
 7. **Assembly quality assessment with QUAST**  
 
+
 ---
 
+
 ## Setup and How to Run the Pipeline
-Download the script to be run. 
-When a scripts is run for the first time, run this code in the Terminal
+
+1. Download the script.
+   
+3. Make the script executable.
+Before running a script for the first time, execute the following code:
 ```bash
 chmod +x file_name.sh
 ````
+Replace `file_name.sh` with the specific script. 
 
-Place your FASTQ files in:
-Data
+3. Prepare input files.
+Place all raw FASTQ files in the directory `Data`.
+Ensure the files end with `.fastq`.
 
-Then run:
+4. Run the script.
 ```bash
-file_name.sh
+./file_name.sh
 ```
+The script will process all FASTQ files found in the `Data`-directory and output results to automatically created result folders.
 
 ---
 
