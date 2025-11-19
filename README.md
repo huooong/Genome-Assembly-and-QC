@@ -1,23 +1,24 @@
-# Genome Assembly and Analysis of Soil Bacteria
+# Genome Assembly and Analysis Pipeline
+This repository contains the data processing workflow developed as part of our 7th semester project, which aims to characterize soil-derived bacterial isolates using Oxford Nanopore sequencing and explore their potential for antibiotic production.
 
-This repository contains the data processing workflow used in our 7th semester project titled 'Identification of Next Generation Antibiotics using Genome Mining Tools', focused on characterizing soil-derived bacterial isolates and exploring their potential for antibiotic production.  
+The pipeline is designed to process raw sequencing data, perform quality assessments, assemble genomes, polish assemblies, and evaluate final assembly quality.
 
 ---
 
 ## Repository Contents
+The repository currently contains the following scripts and directories:
+- `0. Full Script`: A comprehensive pipeline script that automates the entire analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
 
-Currently the repository includes:
-- `0. Full Script` – A combined full analysis pipeline from raw Nanopore reads to assembled and polished genomes.
-
-The scripts listed below are structured to allow each processing step to be run separately:
-- `1. Basic Statistics`
-- `2. NanoPlot`
-- `3. Filtering`
-- `4. Assembly`
-- `5. Polishing`
-- `6. Quality of Assembly`
+The following modular scripts allow you to run each data processing step independently, facilitating troubleshooting, customization, and iterative analysis:
+- `1. Basic Statistics`: Generate Basic sequencing statistics such as read counts, read length distribution, and total bases.
+- `2. NanoPlot`: Visualise sequence run quality and read metrics using NanoPlot. 
+- `3. Filtering`: Filter raw reads based on quality and length thresholds to improve assembly quality.
+- `4. Assembly`: Assemble filtered reads into draft genomes using assembly tools optimised for Nanopore data.
+- `5. Polishing`: Improve assembly accuracy by iterative error correction with long reads.
+- `6. Quality of Assembly`: Evaluate assembly quality metrics (e.g., N50, completeness) using tools such as QUAST.
 
 As the project develops, more files and folders may be added.
+
 ---
 
 ## Workflow Overview
