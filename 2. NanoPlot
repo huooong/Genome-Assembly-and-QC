@@ -21,8 +21,14 @@ mkdir -p "$NANOPLOT_DIR"
 for file in "$INPUT_DIR"/*.fastq; do
     sample=$(basename "$file" .fastq)
     sample_dir="$NANOPLOT_DIR/$sample"
+    mkdir -p "$sample_dir"
+
     echo "Running NanoPlot on $sample..."
-    NanoPlot --fastq "$file" -o "$sample_dir" --prefix "$sample" --tsv_stats --raw
+    NanoPlot \
+        --fastq "$file" \
+        -o "$sample_dir" \
+        --prefix "$sample" \
+        --tsv_stats --raw
 done
 conda deactivate
 echo "NanoPlot results have been saved in $NANOPLOT_DIR"
