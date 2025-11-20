@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Input and output directory
+INPUT_DIR="Data"
+OUTPUT_DIR="Results"
+
+# Load conda commands
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+
+conda create -n multiqc -c bioconda multiqc
+conda activate multiqc
+
+# Run MultiQC on all results
+echo "STEP 7: Generating MultiQC summary report"
+
+## Activate MultiQC environment
+conda activate multiqc_env
+
+## Directory for MultiQC output
+MULTIQC_DIR="$OUTPUT_DIR/MultiQC"
+mkdir -p "$MULTIQC_DIR"
+
+## Run MultiQC on the entire Results folder
+multiqc "$OUTPUT_DIR" -o "$MULTIQC_DIR"
+
+conda deactivate
+
+echo "MultiQC report saved in: $MULTIQC_DIR/multiqc_report.html"
+echo "-------------------------------------"
