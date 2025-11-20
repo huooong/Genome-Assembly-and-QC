@@ -162,3 +162,22 @@ done
 
 conda deactivate
 echo "QUAST reports saved in: $QUAST_DIR"
+
+
+# Run MultiQC on all results
+echo "STEP 7: Generating MultiQC summary report"
+
+## Load MultiQT environment
+conda activate multiqc
+
+## Directory for MultiQC output
+MULTIQC_DIR="$OUTPUT_DIR/MultiQC"
+mkdir -p "$MULTIQC_DIR"
+
+## Run MultiQC on the entire Results folder
+multiqc "$OUTPUT_DIR" -o "$MULTIQC_DIR"
+
+conda deactivate
+
+echo "MultiQC report saved in: $MULTIQC_DIR/multiqc_report.html"
+echo "-------------------------------------"
