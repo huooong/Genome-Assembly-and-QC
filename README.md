@@ -52,7 +52,9 @@ The pipeline performs the following steps:
    - Sorting/indexing with Samtools.  
    - Racon polishing.
 
-7. **Assembly quality assessment with QUAST**  
+7. **Assembly quality assessment with QUAST**
+   
+8. **MultiQT**
 
 
 ---
@@ -112,6 +114,10 @@ conda create -n racon_env -c bioconda racon=1.4.2
 *QUAST*
 ```bash
 conda create -n quast_env -c bioconda quast
+```
+*MultiQT*
+```bash
+conda create -n multiqc -c bioconda multiqc
 ```
 
 ---
