@@ -44,8 +44,10 @@ mkdir -p "$NANOPLOT_DIR"
 
 for file in "$INPUT_DIR"/*.fastq; do
     sample=$(basename "$file" .fastq)
+	sample_dir="$NANOPLOT_DIR/$sample"
+    mkdir -p "$sample_dir"
     echo "Running NanoPlot on $sample..."
-    NanoPlot --fastq "$file" -o "$NANOPLOT_DIR" --prefix "$sample" --tsv_stats --raw
+    NanoPlot --fastq "$file" -o "$sample_dir" --prefix "$sample" --tsv_stats --raw
 done
 conda deactivate
 echo "NanoPlot results have been saved in $NANOPLOT_DIR"
@@ -104,6 +106,8 @@ mkdir -p "$POLISH_DIR"
 
 for assembly_folder in "$ASSEMBLY_DIR"/*; do
     sample=$(basename "$assembly_folder")
+	sample_polish="$POLISH_DIR/$sample"
+    mkdir -p "$sample_polish"
     assembly="$assembly_folder/assembly.fasta"
     reads="$FILTERED_DIR/${sample}_filtered.fastq"
 
@@ -111,23 +115,23 @@ for assembly_folder in "$ASSEMBLY_DIR"/*; do
 
     ##Map reads back to the assembly
     conda activate minimap2
-    minimap2 -x map-ont -t "$THREADS" "$assembly" "$reads" > "$POLISH_DIR/${sample}_aln.sam"
+    minimap2 -x map-ont -t "$THREADS" "$assembly" "$reads" > "$sample_polish/${sample}_aln.sam"
     conda deactivate
     
 
     ##Sort and index alignment
     conda activate samtools_env
-    samtools sort "$POLISH_DIR/${sample}_aln.sam" -o "$POLISH_DIR/${sample}_aln_sorted.bam"
-    samtools index "$POLISH_DIR/${sample}_aln_sorted.bam"
+    samtools sort "$sample_polish/${sample}_aln.sam" -o "$sample_polish/${sample}_aln_sorted.bam"
+    samtools index "$sample_polish/${sample}_aln_sorted.bam"
     conda deactivate
     
 
     ##Polish with Racon
     conda activate racon_env
-    racon -t "$THREADS" "$reads" "$POLISH_DIR/${sample}_aln.sam" "$assembly" > "$POLISH_DIR/${sample}_racon.fasta"
+    racon -t "$THREADS" "$reads" "$sample_polish/${sample}_aln.sam" "$assembly" > "$sample_polish/${sample}_racon.fasta"
     conda deactivate
     
-    echo "$sample polished assembly saved at $POLISH_DIR/${sample}_racon.fasta"
+    echo "$sample polished assembly saved at $sample_polish/${sample}_racon.fasta"
 done
 echo "-------------------------------------"
 
