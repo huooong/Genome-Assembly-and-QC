@@ -35,9 +35,7 @@ for file in "$INPUT_DIR"/*.fastq; do
         --prefix "$sample" \
         --tsv_stats --raw
     
-    echo "-"
-    echo "-"
-    echo "-"
+    echo 
     
     echo "NanoPlot results for $sample have been saved in $sample_dir"
     echo "---------------------------------------------------"
