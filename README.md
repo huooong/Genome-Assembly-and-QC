@@ -1,4 +1,4 @@
-# Genome Assembly and Analysis Pipeline
+# Genome Analysis Pipeline
 This repository contains the data processing workflow developed as part of our 7th semester project, which aims to characterize soil-derived bacterial isolates using Oxford Nanopore sequencing and explore their potential for antibiotic production.
 
 The pipeline is designed to process raw sequencing data, perform quality assessments, assemble genomes, polish assemblies, and evaluate final assembly quality.
