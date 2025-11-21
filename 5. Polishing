@@ -14,39 +14,59 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 ###################################
 
 # Polishing using Racon
-echo "STEP 5: Polishing assemblies with Racon"
+echo "---------------------------------------------------"
+echo "STEP 5: Polishing assemblies with Racon and Medaka"
+
+
+## Polishing parameters
+THREADS=8
+RACON_ROUNDS=3
+
 
 ## Directory for polished assemblies
 POLISH_DIR="$OUTPUT_DIR/Polished"
 mkdir -p "$POLISH_DIR"
 
+
+
 for assembly_folder in "$ASSEMBLY_DIR"/*; do
     sample=$(basename "$assembly_folder")
+    
     sample_polish="$POLISH_DIR/$sample"
     mkdir -p "$sample_polish"
 
-    assembly="$assembly_folder/assembly.fasta"
+    original_assembly="$assembly_folder/assembly.fasta"
     reads="$FILTERED_DIR/${sample}_filtered.fastq"
 
-    echo "Polishing $sample ..."
+    ## Check
+    if [[ ! -f "$original_assembly" ]]; then
+        echo "Error: Assembly not found for $sample"
+        continue
+    fi
 
-    ## Map reads back to the assembly
+    if [[ ! -f "$reads" ]]; then
+        echo "Error: Filtered reads not found for $sample"
+        continue
+    fi
+
+
+    ## Racon
+    current_assembly="$original_assembly"
+    
+    for round in $(seq 1 $RACON_ROUNDS); do
+    echo "--- Racon round $round ---"
+
+    ## Map reads 
     conda activate minimap2
-    minimap2 -x map-ont -t "$THREADS" "$assembly" "$reads" > "$sample_polish/${sample}_aln.sam"
+    minimap2 -a -x map-ont -t "$THREADS" "$current_assembly" "$reads" > "$sample_polish/r${round}.sam"
     conda deactivate
     
-
-    ## Sort and index alignment
-    conda activate samtools_env
-    samtools sort "$sample_polish/${sample}_aln.sam" -o "$sample_polish/${sample}_aln_sorted.bam"
-    samtools index "$sample_polish/${sample}_aln_sorted.bam"
-    conda deactivate
-    
-
     ## Polish with Racon
     conda activate racon_env
-    racon -t "$THREADS" "$reads" "$sample_polish/${sample}_aln.sam" "$assembly" > "$sample_polish/${sample}_racon.fasta"
+    racon -t "$THREADS" "$reads" "$sample_polish/r${round}.sam" "$current_assembly" \
+            > "$sample_polish/racon_round_${round}.fasta"
     conda deactivate
-    
-    echo "$sample polished assembly saved at $sample_polish/${sample}_racon.fasta"
+
+    current_assembly="$sample_polish/racon_round_${round}.fasta"
+    done
 done
