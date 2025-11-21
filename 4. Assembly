@@ -13,7 +13,9 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 ###################################
 
 # Assembling of sequencing data
+echo "---------------------------------------------------"
 echo "STEP 4: Assembling sequenced data using Flye Assembler"
+echo "---------------------------------------------------"
 
 ## Load Flye environment
 conda activate flye_env
@@ -36,7 +38,10 @@ for file in "$FILTERED_DIR"/*_filtered.fastq; do
 		--genome-size "$GENOME_SIZE" \
 		--out-dir "$ASSEMBLY_DIR/$sample" \
 		--threads "$THREADS"
+
+echo "Assembly saved in $ASSEMBLY_DIR"
+echo "---------------------------------------------------"
 done
 conda deactivate
 
-echo "Assemblies saved in $ASSEMBLY_DIR"
+
