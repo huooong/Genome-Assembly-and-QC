@@ -37,25 +37,25 @@ The pipeline performs the following steps:
       - Length vs. Quality scatter plot.
       - Yield by length plot.
 
-4. **Read filtering using Filtlong**  
+3. **Read filtering using Filtlong**  
    - Filter raw reads based on quality and length thresholds to improve assembly quality.
       - Minimum read length: 1000 bp.  
       - Keep top 90% highest-quality reads.
 
-5. **Genome assembly with Flye**  
+4. **Genome assembly with Flye**  
    - Using filtered Nanopore reads.  
    - Genome size set to 5 Mb.
    - Threads set to 4.
 
-6. **Polishing assemblies using Racon**  
+5. **Polishing assemblies using Racon and Medaka**  
    - Mapping reads with minimap2.  
    - Sorting/indexing with Samtools.  
    - Racon polishing.
    - Medaka. 
 
-7. **Assembly quality assessment with QUAST**
+6. **Assembly quality assessment with QUAST**
    
-8. **MultiQT**
+7. **MultiQT**
 
 
 ---
