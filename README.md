@@ -145,14 +145,13 @@ Before activating conda environment
 
 ## Software Requirements
 This pipeline relies on several bioinformatics tools and libraries. We recommend using Conda to manage dependencies easily:
-- NanoPlot (v)
-- Filtlong (v)
-- Flye (v)
-- minimap2 (v)
-- samtools (v)
-- racon (v)
-- QUAST (v)
-
+- NanoPlot (v1.46.1)
+- Filtlong (v0.2.1)
+- Flye (v2.9.6-b1802)
+- minimap2 (v2.30-r1287)
+- samtools (v1.22.1)
+- racon (v1.5.0)
+- QUAST (v5.3.0)
 
 ---
 
