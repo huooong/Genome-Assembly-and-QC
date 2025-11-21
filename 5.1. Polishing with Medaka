@@ -8,44 +8,49 @@ FILTERED_DIR="$OUTPUT_DIR/Filtered"
 ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
 POLISH_DIR="$OUTPUT_DIR/Polished"
 
-
 # Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 # Parameters
 RACON_ROUNDS=3 # Change if needed
-
 ###################################
+
+
 # Final polishing with Medaka
 echo "---------------------------------------------------"
 echo "Final polishing with Medaka"
 
 ## Medaka parameters
 THREADS=8
-MODEL="r1041_e82_400bps_sup" # Change if needed
+MODEL="r1041_e82_400bps_hac_v5.0.0" # Change if needed
 
 ## Create directory for Medaka
-MEDAKA_DIR="$POLISH_DIR/Medaka"
+MEDAKA_DIR="$OUTPUT_DIR/Medaka"
 mkdir -p "$MEDAKA_DIR"
 
 ## Load Medaka environment
-conda activate medaka_env
+conda activate medaka
+conda install -c bioconda pyabpoa
 
 for sample_path in "$POLISH_DIR"/*; do
-  sample=$(basename "$sample_path")
-  sample_dir="$MEDAKA_DIR/$sample"
-  mkdir -p "$sample_dir"
+    sample=$(basename "$sample_path")
+    sample_dir="$MEDAKA_DIR/$sample"
+    mkdir -p "$sample_dir"
   
-  reads="$FILTERED_DIR/${sample}_filtered.fastq"
-  racon_polished_assembly="$POLISH_DIR/$sample/racon_round_${RACON_ROUNDS}.fasta"
+    reads="$FILTERED_DIR/${sample}_filtered.fastq"
+    racon_polished_assembly="$POLISH_DIR/$sample/racon_round_${RACON_ROUNDS}.fasta"
 
-  medaka_consensus \
-    -i $reads \
-    -d $racon_polished_assembly \
-    -o $sample_dir
-    -t $THREADS
-    -m $MODEL
+    echo "Processing $sample ..."
+    medaka_consensus \
+        -i $reads \
+        -d $racon_polished_assembly \
+        -o $sample_dir \
+        -t $THREADS \
+        -m $MODEL
+    
+    echo "Done with $sample"
+    echo "---------------------------------------------------"
 done
 conda deactivate
 
