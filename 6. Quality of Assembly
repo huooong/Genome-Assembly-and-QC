@@ -1,34 +1,39 @@
+###################################
 #!/bin/bash
 
-#Input and output directory (CORRECT THIS IF NEEDED)
+# Directories 
 INPUT_DIR="Data"
 OUTPUT_DIR="Results"
 ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
+POLISH_DIR="$OUTPUT_DIR/Polished"
 
-# Run QUAST on output
-echo "STEP 6: Assessing assembly quality with QUAST"
-
-## Load conda commands
+# Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
-##Load QUAST environment
+###################################
+
+# Run QUAST on output
+echo "---------------------------------------------------"
+echo "STEP 6: Assessing assembly quality with QUAST"
+
+## Load QUAST environment
 conda activate quast_env
 
-##Create directory for QUAST
+## Create directory for QUAST
 QUAST_DIR="$OUTPUT_DIR/QUAST"
 mkdir -p "$QUAST_DIR"
 
 ## QUAST parameters
 THREADS=4
+RACON_ROUNDS=3
 
-#Run QUAST 
 for folder in "$ASSEMBLY_DIR"/*; do
     [ -d "$folder" ] || continue
     sample=$(basename "$folder")
 
     raw_assembly="$ASSEMBLY_DIR/$sample/assembly.fasta"
-    polished_assembly="$OUTPUT_DIR/Polished/${sample}_racon.fasta"
+    polished_assembly="$POLISH_DIR/$sample/racon_round_${RACON_ROUNDS}.fasta"
 
     echo "Running QUAST for $sample ..."
     quast.py \
@@ -37,6 +42,7 @@ for folder in "$ASSEMBLY_DIR"/*; do
         -l "${sample}_raw,${sample}_racon" \
         --threads "$THREADS"
 done
-
 conda deactivate
+
 echo "QUAST reports saved in: $QUAST_DIR"
+echo "---------------------------------------------------"
