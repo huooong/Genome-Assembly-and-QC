@@ -13,7 +13,7 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 # Run NanoPlot
 echo "---------------------------------------------------"
-echo "STEP 2: Assessing quality with NanoPlot"
+echo "STEP 2: Assessing read quality with NanoPlot"
 echo "---------------------------------------------------"
 
 ##Load NanoPlot environment
@@ -28,15 +28,21 @@ for file in "$INPUT_DIR"/*.fastq; do
     sample_dir="$NANOPLOT_DIR/$sample"
     mkdir -p "$sample_dir"
 
-    echo "Running NanoPlot on $sample ----------"
+    echo "Running NanoPlot on $sample ....."
     NanoPlot \
         --fastq "$file" \
         -o "$sample_dir" \
         --prefix "$sample" \
         --tsv_stats --raw
+    
+    echo "-"
+    echo "-"
+    echo "-"
+    
+    echo "NanoPlot results for $sample have been saved in $sample_dir"
+    echo "---------------------------------------------------"
+
 done
 conda deactivate
 
-echo "---------------------------------------------------"
-echo "NanoPlot results have been saved in $NANOPLOT_DIR"
-echo "---------------------------------------------------"
+
