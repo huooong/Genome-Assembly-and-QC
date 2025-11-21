@@ -161,6 +161,10 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 - Medaka (v2.1.1)
 
 ---
+## Medaka
+Current model: r1041_e82_400bps_hac_v5.0.0
+
+---
 
 ## Resources
 Nanoplot:
