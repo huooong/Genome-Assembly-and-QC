@@ -12,6 +12,7 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 ###################################
 
 # Filter reads using Filtlong
+echo "---------------------------------------------------"
 echo "STEP 3: Filtering reads using Filtlong"
 
 ## Load Filtlong environment
@@ -39,3 +40,4 @@ done
 conda deactivate
 
 echo "All files have been filtered. Filtered reads have been saved in $FILTERED_DIR"
+echo "---------------------------------------------------"
