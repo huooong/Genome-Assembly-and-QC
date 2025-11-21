@@ -5,7 +5,7 @@
 INPUT_DIR="Data"
 OUTPUT_DIR="Results"
 
-## Load conda commands
+# Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
