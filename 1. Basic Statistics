@@ -14,7 +14,7 @@ echo "---------------------------------------------------"
 
 for file in "$INPUT_DIR"/*.fastq; do
     sample=$(basename "$file" .fastq)
-    echo "Processing $sample... ----------"
+    echo "Processing $sample ....."
 
     ## Count reads
     reads=$(awk '{s++} END{print s/4}' "$file")
