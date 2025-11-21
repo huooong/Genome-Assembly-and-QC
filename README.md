@@ -51,6 +51,7 @@ The pipeline performs the following steps:
    - Mapping reads with minimap2.  
    - Sorting/indexing with Samtools.  
    - Racon polishing.
+   - Medaka. 
 
 7. **Assembly quality assessment with QUAST**
    
@@ -111,6 +112,11 @@ conda create -n samtools_env -c bioconda samtools
 ```bash
 conda create -n racon_env -c bioconda racon=1.4.2
 ```
+*Medaka*
+```bash
+conda create -n medaka -c conda-forge -c nanoporetech -c bioconda medaka
+conda install -c conda-forge pyabpoa
+```
 *QUAST*
 ```bash
 conda create -n quast_env -c bioconda quast
@@ -152,6 +158,7 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 - samtools (v1.22.1)
 - racon (v1.5.0)
 - QUAST (v5.3.0)
+- Medaka (v2.1.1)
 
 ---
 
@@ -170,6 +177,9 @@ Racon:
 
 QUAST:
 - https://github.com/ablab/quast
+
+Medaka: 
+- https://github.com/nanoporetech/medaka
 
 
 
