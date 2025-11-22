@@ -6,7 +6,7 @@ INPUT_DIR="Data"
 OUTPUT_DIR="Results"
 FILTERED_DIR="$OUTPUT_DIR/Filtered"
 ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
-POLISH_DIR="$OUTPUT_DIR/Polished"
+RACON_DIR="$OUTPUT_DIR/Racon"
 
 # Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
@@ -14,45 +14,46 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 # Parameters
 RACON_ROUNDS=3 # Change if needed
-###################################
 
+###################################
 
 # Final polishing with Medaka
 echo "---------------------------------------------------"
 echo "Final polishing with Medaka"
+echo "---------------------------------------------------"
 
 ## Medaka parameters
 THREADS=8
-MODEL="r1041_e82_400bps_hac_v5.0.0" # Change if needed
+MODEL="r1041_e82_400bps_hac_v5.0.0" #change if needed
 
-## Create directory for Medaka
+## Directory for Medaka
 MEDAKA_DIR="$OUTPUT_DIR/Medaka"
 mkdir -p "$MEDAKA_DIR"
 
 ## Load Medaka environment
 conda activate medaka
-conda install -c bioconda pyabpoa
 
-for sample_path in "$POLISH_DIR"/*; do
-    sample=$(basename "$sample_path")
+## Run Medaka on Racon-polished assemblies
+for polished_assembly in "$RACON_DIR"/*; do
+    sample=$(basename "$polished_assembly")
     sample_dir="$MEDAKA_DIR/$sample"
     mkdir -p "$sample_dir"
-  
-    reads="$FILTERED_DIR/${sample}_filtered.fastq"
-    racon_polished_assembly="$POLISH_DIR/$sample/racon_round_${RACON_ROUNDS}.fasta"
 
-    echo "Processing $sample ..."
+    echo "Starting polishing with Medaka for $sample ....."
+
+    racon_polished_assembly="$RACON_DIR/$sample/racon_round_${RACON_ROUNDS}.fasta"
+    reads="$FILTERED_DIR/$sample/${sample}_filtered.fastq"
+    
     medaka_consensus \
         -i $reads \
         -d $racon_polished_assembly \
         -o $sample_dir \
         -t $THREADS \
         -m $MODEL
-    
-    echo "Done with $sample"
+
+    echo
+    echo "Completed Medaka for $sample. Results have been saved in "$MEDAKA_DIR""
     echo "---------------------------------------------------"
 done
 conda deactivate
 
-echo "Medaka polishing complete"
-echo "---------------------------------------------------"
