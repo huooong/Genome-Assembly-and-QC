@@ -20,7 +20,7 @@ echo "---------------------------------------------------"
 
 ## Racon parameters
 THREADS=8
-RACON_ROUNDS=3 #change if needed
+RACON_ROUNDS=2 #change if needed
 
 ## Directory for Racon-polished assemblies
 RACON_DIR="$OUTPUT_DIR/Racon"
@@ -64,11 +64,10 @@ for assembly in "$ASSEMBLY_DIR"/*; do
             > "$sample_dir/racon_round_${round}.fasta"
         conda deactivate
 
-        current_assembly="$sample_polish/racon_round_${round}.fasta"
+        current_assembly="$sample_dir/racon_round_${round}.fasta"
     done
 
     echo
-    echo "Completed $RACON_ROUNDS rounds for Racon for $sample. Results have been saved in "$RACON_DIR"
+    echo "Completed $RACON_ROUNDS rounds for Racon for $sample. Results have been saved in "$RACON_DIR""
     echo "---------------------------------------------------"
 done
-
