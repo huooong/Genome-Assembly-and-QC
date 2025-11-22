@@ -26,7 +26,7 @@ CHECKM2_DIR="$OUTPUT_DIR/CheckM2"
 mkdir -p "$CHECKM2_DIR"
 
 ## CheckM2 database path
-CHECKM2_DB="Database"
+CHECKM2_DB="Database/CheckM2_database/uniref100.KO.1.dmnd"
 export CHECKM2DB="$CHECKM2_DB"
 
 ## CheckM2 parameters
@@ -44,11 +44,10 @@ for fasta_file in "$POLISHED_DIR"/*/*.fasta;  do
     checkm2 predict \
         --threads $THREADS \
         --input "$fasta_file" \
-        --output-directory "$sample_dir"
+        --output_directory "$sample_dir" \
+        --database_path "$CHECKM2_DB"
 
     echo "Results saved in $sample_dir"
     echo "----------------------------"
 done
-
 conda deactivate
-
