@@ -5,7 +5,8 @@
 INPUT_DIR="Data"
 OUTPUT_DIR="Results"
 ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
-POLISH_DIR="$OUTPUT_DIR/Polished"
+RACON_DIR="$OUTPUT_DIR/Racon"
+MEDAKA_DIR="$OUTPUT_DIR/Medaka"
 
 # Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
@@ -16,11 +17,12 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 # Run QUAST on output
 echo "---------------------------------------------------"
 echo "STEP 6: Assessing assembly quality with QUAST"
+echo "---------------------------------------------------"
 
 ## Load QUAST environment
 conda activate quast_env
 
-## Create directory for QUAST
+## Directory for QUAST
 QUAST_DIR="$OUTPUT_DIR/QUAST"
 mkdir -p "$QUAST_DIR"
 
@@ -28,21 +30,35 @@ mkdir -p "$QUAST_DIR"
 THREADS=4
 RACON_ROUNDS=3
 
-for folder in "$ASSEMBLY_DIR"/*; do
-    [ -d "$folder" ] || continue
-    sample=$(basename "$folder")
+## Run QUAST
+for assembly in "$ASSEMBLY_DIR"/*; do
+    [ -d "$assembly" ] || continue
+    sample=$(basename "$assembly")
 
     raw_assembly="$ASSEMBLY_DIR/$sample/assembly.fasta"
-    polished_assembly="$POLISH_DIR/$sample/racon_round_${RACON_ROUNDS}.fasta"
+    racon_polished="$RACON_DIR/$sample/racon_round_${RACON_ROUNDS}.fasta"
+    medaka_polished="$MEDAKA_DIR/$sample/medaka.fasta" #CHANGE THIS
 
-    echo "Running QUAST for $sample ..."
-    quast.py \
-        "$raw_assembly" "$polished_assembly" \
-        -o "$QUAST_DIR/${sample}" \
-        -l "${sample}_raw,${sample}_racon" \
-        --threads "$THREADS"
+    echo "Running QUAST for $sample ....."
+    
+    if [[ -f "$medaka_polished" ]]; then
+        quast.py \
+            "$raw_assembly" "$racon_polished" "$medaka_polished" \
+            -o "$QUAST_DIR/${sample}" \
+            -l "${sample}_raw,${sample}_racon,${sample}_medaka" \
+            --threads "$THREADS"
+    else
+        echo "Medaka polished file NOT found for $sample – running QUAST without medaka"
+        quast.py \
+            "$raw_assembly" "$racon_polished" \
+            -o "$QUAST_DIR/${sample}" \
+            -l "${sample}_raw,${sample}_racon" \
+            --threads "$THREADS"
+    fi
+    
+    echo "QUAST report saved in: $QUAST_DIR"
+    echo "---------------------------------------------------"
 done
 conda deactivate
 
-echo "QUAST reports saved in: $QUAST_DIR"
-echo "---------------------------------------------------"
+
