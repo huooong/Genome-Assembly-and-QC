@@ -163,6 +163,7 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 - racon (v1.5.0)
 - QUAST (v5.3.0)
 - Medaka (v2.1.1)
+- CheckM2 (v1.1.0)
 
 ---
 ## Medaka
@@ -198,6 +199,9 @@ QUAST:
 
 Medaka: 
 - https://github.com/nanoporetech/medaka
+
+CheckM2:
+- https://github.com/chklovski/CheckM2/
 
 
 
