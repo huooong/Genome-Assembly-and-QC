@@ -13,7 +13,7 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 # Filter reads using Filtlong
 echo "---------------------------------------------------"
-echo "STEP 3: Filtering reads using Filtlong"
+echo "Filtering reads using Filtlong"
 echo "---------------------------------------------------"
 
 ## Load Filtlong environment
@@ -23,7 +23,7 @@ conda activate filtlong_env
 FILTERED_DIR="$OUTPUT_DIR/Filtered"
 mkdir -p "$FILTERED_DIR"
 
-## Filtlong parameters
+## Filtlong parameters 
 MIN_LENGTH=1000        #Minimum read length to keep
 KEEP_PERCENT=90        #Percentage of best reads to retain
 
