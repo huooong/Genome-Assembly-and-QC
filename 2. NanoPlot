@@ -19,7 +19,7 @@ echo "---------------------------------------------------"
 ## Load NanoPlot environment
 conda activate nanoplot2
 
-## Create directory for NanoPlot Results
+## Directory for NanoPlot Results
 NANOPLOT_DIR="$OUTPUT_DIR/NanoPlot"
 mkdir -p "$NANOPLOT_DIR"
 
