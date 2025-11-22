@@ -175,6 +175,9 @@ In order to use CheckM2 the DIAMOND database needs to be downloaded. This is don
 checkm2 database --download
 ```
 
+```bash
+checkm2 testrun
+```
 ---
 
 ## Resources
