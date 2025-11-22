@@ -121,6 +121,10 @@ conda install -c conda-forge pyabpoa
 ```bash
 conda create -n quast_env -c bioconda quast
 ```
+*CheckM2*
+```bash
+conda create -n checkm2_env -c bioconda -c conda-forge checkm2
+```
 *MultiQT*
 ```bash
 conda create -n multiqc -c bioconda multiqc
