@@ -4,7 +4,7 @@
 # Directories
 INPUT_DIR="Data"
 OUTPUT_DIR="Results"
-POLISH_DIR="$OUTPUT_DIR/Polished"
+RACON_DIR="$OUTPUT_DIR/Racon"
 MEDAKA_DIR="$OUTPUT_DIR/Medaka"
 
 # Load conda commands
@@ -21,11 +21,11 @@ echo "---------------------------------------------------"
 ## Load CheckM2 environment
 conda activate checkm2_env
 
-## Create directory for CheckM2 Results
+## Directory for CheckM2 
 CHECKM2_DIR="$OUTPUT_DIR/CheckM2"
 mkdir -p "$CHECKM2_DIR"
 
-## CheckM2 database path
+## CheckM2 settings
 CHECKM2_DB="
 THREADS=8
 
