@@ -7,9 +7,9 @@ OUTPUT_DIR="Results"
 
 ###################################
 
-# Basic Statistics on the Sequencing Data
+# Basic Statistics of the Sequencing Data
 echo "---------------------------------------------------"
-echo "STEP 1: Counting reads, bases and average read length"
+echo "Counting reads, bases and average read length"
 echo "---------------------------------------------------"
 
 for file in "$INPUT_DIR"/*.fastq; do
