@@ -25,27 +25,30 @@ conda activate checkm2_env
 CHECKM2_DIR="$OUTPUT_DIR/CheckM2"
 mkdir -p "$CHECKM2_DIR"
 
-## CheckM2 settings
-CHECKM2_DB="
+## CheckM2 database path
+CHECKM2_DB="Database"
+export CHECKM2DB="$CHECKM2_DB"
+
+## CheckM2 parameters
 THREADS=8
+POLISHED_DIR="$MEDAKA_DIR" #change if needed
+echo "Running CheckM2 on polished assemblies in $POLISHED_DIR"
 
 ## Run CheckM2
-for file in "$INPUT_DIR"/*.fasta; do
-    sample=$(basename "$file" .fastq)
+for fasta_file in "$POLISHED_DIR"/*/*.fasta;  do
+    sample=$(basename "$(dirname "$fasta_file")")
     sample_dir="$CHECKM2_DIR/$sample"
     mkdir -p "$sample_dir"
 
-    echo "Running CheckM2 on $sample ....."
+    echo "Running CheckM2 on sample: $sample"
     checkm2 predict \
-    	-- threads $THREADS \
-		-- input "$file" \
-		-- output-directory "$sample_dir"
-    
-    echo 
-    
-    echo "CheckM2 results for $sample have been saved in $sample_dir"
-    echo "---------------------------------------------------"
+        --threads $THREADS \
+        --input "$fasta_file" \
+        --output-directory "$sample_dir"
 
+    echo "Results saved in $sample_dir"
+    echo "----------------------------"
 done
+
 conda deactivate
 
