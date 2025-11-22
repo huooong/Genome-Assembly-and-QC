@@ -169,6 +169,13 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 Current model: r1041_e82_400bps_hac_v5.0.0
 
 ---
+## CheckM2
+In order to use CheckM2 the DIAMOND database needs to be downloaded. This is done by:
+```bash
+checkm2 database --download
+```
+
+---
 
 ## Resources
 Nanoplot:
