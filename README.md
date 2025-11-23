@@ -16,14 +16,16 @@ The following modular scripts allow you to run each data processing step indepen
 - `2. NanoPlot`
 - `3. Filtering`
 - `4. Assembly`
-- `5. Polishing`
-- `6. Quality of Assembly`
+- `5.1. Polishing with Racon`
+- `5.2. Polishing with Medaka`
+- `6.1. QUAST`
+- `6.2. BUSCO`
+- `7. Completeness and contamination`
+- `MultiQT`
 
 As the project develops, more files and folders may be added.
 
-
 ---
-
 
 ## Workflow Overview
 The pipeline performs the following steps:
@@ -49,9 +51,8 @@ The pipeline performs the following steps:
 
 5. **Polishing assemblies using Racon and Medaka**  
    - Mapping reads with minimap2.  
-   - Sorting/indexing with Samtools.  
-   - Racon polishing.
-   - Medaka. 
+   - Racon polishing (number of iterations can be changed)
+   - Medaka (final polishing step)
 
 6. **Assembly quality assessment with QUAST**
    
