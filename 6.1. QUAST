@@ -12,6 +12,8 @@ MEDAKA_DIR="$OUTPUT_DIR/Medaka"
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
+# Parameters
+RACON_ROUNDS=3
 ###################################
 
 # Run QUAST on output
@@ -28,7 +30,6 @@ mkdir -p "$QUAST_DIR"
 
 ## QUAST parameters
 THREADS=4
-RACON_ROUNDS=3
 
 ## Run QUAST
 for assembly in "$ASSEMBLY_DIR"/*; do
