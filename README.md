@@ -15,12 +15,13 @@ The following modular scripts allow you to run each data processing step indepen
 - `2.2. NanoPlot on filtered reads`
 - `3. Filtering`
 - `4. Assembly`
-- `5.1. Polishing with Racon`
-- `5.2. Polishing with Medaka`
-- `6.1. QUAST`
-- `6.2. BUSCO` (In progress)
-- `7. Completeness and contamination`
-- `8. Annotation` (In progress)
+- `5. Coverage`
+- `6.1. Polishing with Racon`
+- `6.2. Polishing with Medaka`
+- `7.1. QUAST`
+- `7.2. BUSCO` (In progress)
+- `8. Completeness and contamination`
+- `9. Annotation` (In progress)
 - `MultiQT`
 
 As the project develops, more files and folders may be added.
@@ -57,22 +58,25 @@ The pipeline performs the following steps:
       - Estimated genome size: **5 Mb**.
       - Threads: **4**.
 
-**5.1 Polishing assemblies using Racon**  
+**5.0. Calculating Coverage**  
+   - Sequencing coverage for assembled genomes are calculated using minimap2 and samtools.  
+
+**6.1 Polishing assemblies using Racon**  
    - Performs iterative polishing (**3 iterations**) consisting of:
       - Mapping reads with minimap2.  
       - Polishing with Racon.
 
-**5.2 Final polish using Medaka**  
+**6.2 Final polish using Medaka**  
    - Refines assemblies using Medaka with the model:
       - `r1041_e82_400bps_hac_v5.0.0`
 
-**6.0. Assembly quality assessment with QUAST**
+**7.0. Assembly quality assessment with QUAST**
    - Evaluates assembly statistics including N50, genome size, misassemblies, and GC content.
   
-**7.0. Assessment of completeness and contamination with CheckM2**
+**8.0. Assessment of completeness and contamination with CheckM2**
    - Estimates genome completeness and contamination to assess assembly quality and reliability.
 
-**8.0. MultiQT**
+**9.0. MultiQT**
    - Combines key results and quality metrics from multiple tools into a single, interactive HTML report.
 
 ---
