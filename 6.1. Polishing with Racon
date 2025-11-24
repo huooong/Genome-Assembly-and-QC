@@ -19,7 +19,7 @@ echo "Polishing assemblies with Racon"
 echo "---------------------------------------------------"
 
 ## Racon parameters
-THREADS=8
+THREADS=4
 RACON_ROUNDS=3 #change if needed
 
 ## Directory for Racon-polished assemblies
