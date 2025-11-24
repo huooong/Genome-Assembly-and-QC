@@ -26,10 +26,11 @@ mkdir -p "$FILTERED_DIR"
 ## Filtlong parameters 
 MIN_LENGTH=1000        #Minimum read length to keep
 KEEP_PERCENT=90        #Percentage of best reads to retain
+TARGET_BASES=50000000   
 
 ## Run Filtlong
-for file in "$INPUT_DIR"/*.fastq; do
-    sample=$(basename "$file" .fastq)
+for file in "$INPUT_DIR"/*.fastq.gz; do
+    sample=$(basename "$file" .fastq.gz)
     sample_dir="$FILTERED_DIR/$sample"
     mkdir -p "$sample_dir"
     
@@ -38,6 +39,7 @@ for file in "$INPUT_DIR"/*.fastq; do
     filtlong \
         --min_length "$MIN_LENGTH" \
         --keep_percent "$KEEP_PERCENT" \
+        --target_bases "$TARGET_BASES" \
         "$file" > "$sample_dir/${sample}_filtered.fastq"
 
     echo "Filtered $sample has been saved in $sample_dir"
