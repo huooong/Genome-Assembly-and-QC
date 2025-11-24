@@ -29,7 +29,7 @@ GENOME_SIZE="5m"
 THREADS=4
 
 ## Run flye
-for file in "$FILTERED_DIR"/*_filtered.fastq; do
+for file in "$FILTERED_DIR"/*/*_filtered.fastq; do
 	sample=$(basename "$file" _filtered.fastq)
 	echo "Assembling $sample..."
 
@@ -44,5 +44,4 @@ echo "---------------------------------------------------"
 
 done
 conda deactivate
-
 
