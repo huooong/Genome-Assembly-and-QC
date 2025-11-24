@@ -1,3 +1,4 @@
+###################################
 #!/bin/bash
 
 # Input and output directory
@@ -7,6 +8,9 @@ OUTPUT_DIR="Results"
 # Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
+
+###################################
+
 
 conda create -n multiqc -c bioconda multiqc
 conda activate multiqc
