@@ -202,9 +202,9 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 - CheckM2 (v1.1.0)
 
 ---
-## ...
+## ... (section in progress)
 
-### Medaka
+### Medaka 
 **Models**
 In order to find the model you want to run. 
 ```bash
