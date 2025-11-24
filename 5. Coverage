@@ -5,6 +5,7 @@
 INPUT_DIR="Data"
 OUTPUT_DIR="Results"
 ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
+FILTERED_DIR="$OUTPUT_DIR/Filtered"
 
 # Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
@@ -27,15 +28,15 @@ echo -e "Sample\tMean_coverage" > "$COVERAGE_FILE"
 
 ## Run coverage analysis for all assemblies
 for assembly in "$ASSEMBLY_DIR"/*; do
-    sample=$(basename "$assembly" .fasta)
-    current_assembly="$assembly/assembly.fasta"
-    reads="$INPUT_DIR/$sample/$sample.fastq.gz"
+    sample=$(basename "$assembly")
+    current_assembly="$ASSEMBLY_DIR/$sample/assembly.fasta"
+    reads="$FILTERED_DIR/$sample/"*_filtered.fastq
 
     echo "Processing $sample ....."
    
     ## Map reads to assembly
     conda activate minimap2
-    minimap2 -a -x map-ont "$current_assembly" "$reads" > "$COVERAGE_DIR/$sample.bam"
+    minimap2 -a -x map-ont "$current_assembly" $reads > "$COVERAGE_DIR/$sample.bam"
     conda deactivate
 
     ## Sort and index
@@ -55,5 +56,10 @@ for assembly in "$ASSEMBLY_DIR"/*; do
     echo "Mean coverage for $sample: $mean_coverage"
     conda deactivate
 done
+
+# Remove intermediate files
+rm "$COVERAGE_DIR/"*.bam
+rm "$COVERAGE_DIR/"*.bam.bai
+rm "$COVERAGE_DIR/"*.txt
 
 
