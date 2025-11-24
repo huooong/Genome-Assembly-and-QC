@@ -15,9 +15,10 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 COVERAGE_DIR="$OUTPUT_DIR/Coverage"
 mkdir -p "$COVERAGE_DIR"
 
-# Loop over all assemblies
-for assembly in "$ASSEMBLY_DIR"/*.fasta; do
+# Calculate coverage for all assemblies
+for assembly in "$ASSEMBLY_DIR"/*; do
     sample=$(basename "$assembly" .fasta)
+    current_assembly="$assembly/assembly.fasta"
     reads="$INPUT_DIR/$sample/$sample.fastq.gz"
 
     echo "---------------------------------------------------"
@@ -25,8 +26,8 @@ for assembly in "$ASSEMBLY_DIR"/*.fasta; do
     echo "---------------------------------------------------"
 
     # Map reads to assembly
-    conda activate minimap2_env
-    minimap2 -ax map-ont "$assembly" "$reads" | samtools view -bS - > "$COVERAGE_DIR/$sample.bam"
+    conda activate minimap2
+    minimap2 -a -x map-ont "$assembly" "$reads" > "$COVERAGE_DIR/$sample.bam"
     conda deactivate
 
     # Sort and index
