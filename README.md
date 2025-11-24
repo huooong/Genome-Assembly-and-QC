@@ -3,24 +3,24 @@ This repository contains the data processing workflow developed as part of our 7
 
 The pipeline is designed to process raw sequencing data, perform quality assessments, assemble genomes, polish assemblies, and evaluate final assembly quality.
 
-
 ---
-
 
 ## Repository Contents
 The repository currently contains the following scripts and directories:
-- `0. Full Script`: A comprehensive pipeline script that automates the entire analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
+- `0. Full Script`: (In progress) A comprehensive pipeline script that automates the entire analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
 
 The following modular scripts allow you to run each data processing step independently:
 - `1. Basic Statistics`
-- `2. NanoPlot`
+- `2.1. NanoPlot on raw reads`
+- `2.2. NanoPlot on filtered reads`
 - `3. Filtering`
 - `4. Assembly`
 - `5.1. Polishing with Racon`
 - `5.2. Polishing with Medaka`
 - `6.1. QUAST`
-- `6.2. BUSCO`
+- `6.2. BUSCO` (In progress)
 - `7. Completeness and contamination`
+- `8. Annotation` (In progress)
 - `MultiQT`
 
 As the project develops, more files and folders may be added.
@@ -29,45 +29,81 @@ As the project develops, more files and folders may be added.
 
 ## Workflow Overview
 The pipeline performs the following steps:
-1. **Basic statistics on raw FASTQ reads**  
-   - Generate basic sequencing statistics such as read counts, total bases, and average read length of each sample.
 
-2. **Quality assessment using NanoPlot**
-   - Gives summary statistics and plots describing the quality of input data prior to analysis.
-   - Plots that are generated, include:
-      - Weighted and non-weighted histogram of read lengths.
-      - Length vs. Quality scatter plot.
+**1.0. Basic statistics on raw FASTQ reads**  
+   - Generate basic sequencing statistics for each samples, including:
+      - Read counts,
+      - Total bases,
+      - Average read length.
+
+**2.1. Quality assessment of raw reads using NanoPlot**
+   - Provides summary statistics and visualisations describing the quality of unfiltered reads.
+   - Generated plots include:
+      - Weighted and non-weighted histogram of read lengths,
+      - Length vs. Quality scatter plot,
       - Yield by length plot.
 
-3. **Read filtering using Filtlong**  
-   - Filter raw reads based on quality and length thresholds to improve assembly quality.
-      - Minimum read length: 500 and 1000 bp.  
-      - Keep top 95% and 90% highest-quality reads.
-      - Remove bases until only the best quality 500 Mbp remain.
+**2.2. Quality assessment of filtered reads using NanoPlot**
+   - Runs NanoPlot on Filtlong-filtered reads to evaluate quality after filtering.
 
-4. **Genome assembly with Flye**  
-   - Using filtered Nanopore reads.  
-   - Genome size set to 5 Mb.
-   - Threads set to 4.
+**3.0. Read filtering using Filtlong**  
+   - Filters raw Nanopore reads to improve downstream assembly quality using the following parameters:
+      - Minimum read length: **1000 bp**,  
+      - Keep top **90%** highest-quality reads,
+      - Trim bases until only the best **500 Mbp** remain.
 
-5. **Polishing assemblies using Racon and Medaka**  
-   - Mapping reads with minimap2.  
-   - Racon polishing (number of iterations can be changed)
-   - Medaka (final polishing step)
+**4.0. Genome assembly with Flye**  
+   - Assembles genomes from filtered Nanopore reads using the following parameters:
+      - Estimated genome size: **5 Mb**.
+      - Threads: **4**.
 
-6. **Assembly quality assessment with QUAST**
-   
-7. **MultiQT**
+**5.1 Polishing assemblies using Racon**  
+   - Performs iterative polishing (**3 iterations**) consisting of:
+      - Mapping reads with minimap2.  
+      - Polishing with Racon.
 
+**5.2 Final polish using Medaka**  
+   - Refines assemblies using Medaka with the model:
+      - `r1041_e82_400bps_hac_v5.0.0`
+
+**6.0. Assembly quality assessment with QUAST**
+   - Evaluates assembly statistics including N50, genome size, misassemblies, and GC content.
+  
+**7.0. Assessment of completeness and contamination with CheckM2**
+   - Estimates genome completeness and contamination to assess assembly quality and reliability.
+
+**8.0. MultiQT**
+   - Combines key results and quality metrics from multiple tools into a single, interactive HTML report.
+
+---
+## Directories 
+### Project Structure
+This project is organised to streamline the processing and analysis of sequencing data. 
+
+The main project directory is called `P7`. Within `P7`, there is a `Data` directory containing all raw FASTQ files (`*.fastq.gz`) generated from Oxford Nanopore sequencing. 
+
+The fastq.gz files are named `PBI54877.barcodeX.fastq.gz`, where X = 17-36, corresponding to 20 individual samples.
+
+### Output Organisation
+All analysis results are stored inside a folder called `Results`. This directory contains subfolders for each step of the pipeline: 
+   - Filtered/
+   - NanoPlot/
+   - NanoPlot_filtered/
+   - Assembly/
+   - Racon/
+   - Medaka/
+   - QUAST/
+   - CheckM2/
+   - MultiQT/
+
+Each of these subfolders contains one directory per sample, following the same naming scheme as the input files. 
 
 ---
 
-
 ## Setup and How to Run the Pipeline
-
-1. Download the script.
+1. Download/copy the script.
    
-3. Make the script executable.
+2. Make the script executable.
 Before running a script for the first time, execute the following code:
 ```bash
 chmod +x file_name.sh
@@ -76,9 +112,11 @@ Replace `file_name.sh` with the specific script.
 
 3. Prepare input files.
 Place all raw FASTQ files in the directory `Data`.
-Ensure the files end with `.fastq`.
+```bash
+cp -r /raw_data/MA/tinyearth/20251119_np_PBI54877/*.fastq.gz ~/P7/Data/
+``` 
 
-4. Run the script.
+5. Run the script.
 ```bash
 ./file_name.sh
 ```
@@ -150,12 +188,7 @@ Before activating conda environment
 
 ---
 
-## Directories
-
-
----
-
-## Software Requirements
+### Software Requirements
 This pipeline relies on several bioinformatics tools and libraries. We recommend using Conda to manage dependencies easily:
 - NanoPlot (v1.46.1)
 - Filtlong (v0.2.1)
@@ -166,10 +199,6 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 - QUAST (v5.3.0)
 - Medaka (v2.1.1)
 - CheckM2 (v1.1.0)
-
----
-## Medaka
-Current model: r1041_e82_400bps_hac_v5.0.0
 
 ---
 ## CheckM2
@@ -183,6 +212,7 @@ Testrun can be done using:
 ```bash
 checkm2 testrun
 ```
+
 ---
 
 ## Resources
