@@ -12,7 +12,7 @@ conda create -n multiqc -c bioconda multiqc
 conda activate multiqc
 
 # Run MultiQC on all results
-echo "STEP 7: Generating MultiQC summary report"
+echo "Generating MultiQC summary report"
 
 ## Activate MultiQC environment
 conda activate multiqc_env
