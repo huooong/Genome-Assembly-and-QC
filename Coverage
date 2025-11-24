@@ -1,0 +1,97 @@
+###################################
+#!/bin/bash
+
+# Directories
+INPUT_DIR="Data"
+OUTPUT_DIR="Results"
+ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
+
+# Load conda commands
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+
+###################################
+
+COVERAGE_DIR="$OUTPUT_DIR/Coverage"
+mkdir -p "$COVERAGE_DIR"
+
+# Loop over all assemblies
+for assembly in "$ASSEMBLY_DIR"/*.fasta; do
+    sample=$(basename "$assembly" .fasta)
+    reads="$INPUT_DIR/$sample/$sample.fastq.gz"
+
+    echo "---------------------------------------------------"
+    echo "Calculating coverage for $sample"
+    echo "---------------------------------------------------"
+
+    # Map reads to assembly
+    conda activate minimap2_env
+    minimap2 -ax map-ont "$assembly" "$reads" | samtools view -bS - > "$COVERAGE_DIR/$sample.bam"
+    conda deactivate
+
+    # Sort and index
+    conda activate samtools_env
+    samtools sort -o "$COVERAGE_DIR/$sample.sorted.bam" "$COVERAGE_DIR/$sample.bam"
+    samtools index "$COVERAGE_DIR/$sample.sorted.bam"
+
+    # Depth file
+    samtools depth -a "$COVERAGE_DIR/$sample.sorted.bam" > "$COVERAGE_DIR/$sample.depth.txt"
+    conda deactivate
+
+    # Compute mean coverage
+    mean_coverage=$(awk '{sum+=$3} END {if (NR>0) print sum/NR; else print 0}' "$COVERAGE_DIR/$sample.depth.txt")
+
+    # Save to table
+    echo -e "$sample\t$mean_coverage" >> "$COVERAGE_DIR/coverage_summary.tsv"
+
+    echo "Mean coverage for $sample: $mean_coverage"
+done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Calculating coverage
+echo "---------------------------------------------------"
+echo "Calculating coverage"
+echo "---------------------------------------------------"
+
+for file in "$INPUT_DIR"/*.fastq; do
+    sample=$(basename "$file" .fastq)
+    echo "Processing $sample ....."
+
+    ## Count reads
+    reads=$(awk '{s++} END{print s/4}' "$file")
+
+    ## Count bases
+    bases=$(awk 'NR%4==2 {bases+=length($0)} END{print bases}' "$file")
+
+    ## Average read length
+    avg_length=$(awk 'NR%4==2 {bases+=length($0); reads++} END{print bases/reads}' "$file")
+
+    ## Print results
+    echo " Reads: $reads"
+    echo " Bases: $bases"
+    echo " Average read length: $avg_length"
+    echo "---------------------------------------------------"
+done
