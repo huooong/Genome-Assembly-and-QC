@@ -14,7 +14,7 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 # Assess read quality with NanoPlot
 echo "---------------------------------------------------"
-echo "Assessing read quality with NanoPlot"
+echo "Assessing read quality with NanoPlot after filtering"
 echo "---------------------------------------------------"
 
 ## Load NanoPlot environment
