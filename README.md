@@ -41,8 +41,9 @@ The pipeline performs the following steps:
 
 3. **Read filtering using Filtlong**  
    - Filter raw reads based on quality and length thresholds to improve assembly quality.
-      - Minimum read length: 1000 bp.  
-      - Keep top 90% highest-quality reads.
+      - Minimum read length: 500 and 1000 bp.  
+      - Keep top 95% and 90% highest-quality reads.
+      - Remove bases until only the best quality 50 Mbp remain.
 
 4. **Genome assembly with Flye**  
    - Using filtered Nanopore reads.  
