@@ -202,7 +202,16 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 - CheckM2 (v1.1.0)
 
 ---
-## CheckM2
+## ...
+
+### Medaka
+**Models**
+In order to find the model you want to run. 
+```bash
+medaka tools resolve_model --auto_model <consensus/variant> <input.bam/input.fastq>
+```
+
+### CheckM2
 In order to use CheckM2 the DIAMOND database needs to be downloaded. This is done by:
 ```bash
 checkm2 database --download
