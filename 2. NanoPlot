@@ -24,8 +24,8 @@ NANOPLOT_DIR="$OUTPUT_DIR/NanoPlot"
 mkdir -p "$NANOPLOT_DIR"
 
 ## Run NanoPlot
-for file in "$INPUT_DIR"/*.fastq; do
-    sample=$(basename "$file" .fastq)
+for file in "$INPUT_DIR"/*.fastq.gz; do
+    sample=$(basename "$file" .fastq.gz)
     sample_dir="$NANOPLOT_DIR/$sample"
     mkdir -p "$sample_dir"
 
