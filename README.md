@@ -128,6 +128,7 @@ The script will process all FASTQ files found in the `Data`-directory and output
 Conda environments allow you to create isolated spaces with specific packages and versions, avoiding conflicts between projects.
 
 If you have not done it yet, you need to create the needed environments: 
+
 *Nanoplot*
 ```bash
 conda create -n nanoplot2 -c bioconda nanoplot
