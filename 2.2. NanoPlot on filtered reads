@@ -1,0 +1,46 @@
+###################################
+#!/bin/bash
+
+# Directories
+INPUT_DIR="Data"
+OUTPUT_DIR="Results"
+FILTERED_DIR="$OUTPUT_DIR/Filtered"
+
+# Load conda commands
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+
+###################################
+
+# Assess read quality with NanoPlot
+echo "---------------------------------------------------"
+echo "Assessing read quality with NanoPlot"
+echo "---------------------------------------------------"
+
+## Load NanoPlot environment
+conda activate nanoplot2
+
+## Directory for NanoPlot Results
+NANOPLOT_DIR="$OUTPUT_DIR/NanoPlot_filtered"
+mkdir -p "$NANOPLOT_DIR"
+
+## Run NanoPlot
+for file in "$FILTERED_DIR"/*/*_filtered.fastq; do
+    sample=$(basename "$file" _filtered.fastq)
+    sample_dir="$NANOPLOT_DIR/$sample"
+    mkdir -p "$sample_dir"
+
+    echo "Running NanoPlot on $sample ....."
+    NanoPlot \
+        --fastq "$file" \
+        -o "$sample_dir" \
+        --prefix "$sample" \
+        --tsv_stats --raw
+    
+    echo 
+    
+    echo "NanoPlot results for $sample have been saved in $sample_dir"
+    echo "---------------------------------------------------"
+
+done
+conda deactivate
