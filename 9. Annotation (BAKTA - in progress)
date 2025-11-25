@@ -1,0 +1,47 @@
+###################################
+#!/bin/bash
+
+# Directories
+INPUT_DIR="Results"
+OUTPUT_DIR="Results"
+MEDAKA_DIR="$OUTPUT_DIR/Medaka"
+
+# Load conda commands
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+
+###################################
+
+# Genome annotation with BAKTA
+echo "---------------------------------------------------"
+echo "Running BAKTA for gene annotation"
+echo "---------------------------------------------------"
+
+## Directory for BAKTA 
+BAKTA_DIR="$OUTPUT_DIR/Bakta"
+mkdir -p "$BAKTA_DIR"
+
+## Activate bakta environment
+conda activate bakta
+
+## Run Bakta on all assemblies
+for polished_assembly in "$MEDAKA_DIR"/*; do
+    sample=$(basename "$polished_assembly")
+    medaka_polished="$MEDAKA_DIR/$sample/medaka.fasta"
+
+    echo "Annotating $sample ....."
+
+    bakta \
+      --db "$BAKTA_DB \
+      --threads 8 \
+      --output "$BAKTA_DIR/$sample" \
+      "$FILE"
+
+    echo "Done with $sample"
+    echo "---------------------------------------------------"
+
+done
+
+echo "All annotations completed!"
+
+
