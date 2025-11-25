@@ -176,6 +176,10 @@ conda create -n checkm2_env -c bioconda -c conda-forge checkm2
 ```bash
 conda create -n multiqc -c bioconda multiqc
 ```
+*GTDB-Tk*
+```bash
+conda create -n gtdbtk_env -c conda-forge -c bioconda gtdbtk=2.5.2
+```
 
 ---
 
@@ -206,6 +210,7 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 - QUAST (v5.3.0)
 - Medaka (v2.1.1)
 - CheckM2 (v1.1.0)
+- GTDB-Tk (v2.5.2)
 
 ---
 ## ... (section in progress)
@@ -228,6 +233,9 @@ Testrun can be done using:
 ```bash
 checkm2 testrun
 ```
+
+### GTDB-Tk
+
 
 ---
 
