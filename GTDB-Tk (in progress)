@@ -1,12 +1,9 @@
+#####################################
 #!/bin/bash
-set -euo pipefail
 
-#####################################
-# User settings
-#####################################
 
-ASSEMBLY_DIR="Results/Assembly"        # Folder with all *.fasta assemblies
-OUTPUT_DIR="Results/GTDBtk"            # Parent output folder
+ASSEMBLY_DIR="Results/Assembly"       
+OUTPUT_DIR="Results/GTDBtk"            
 GTDB_DB="/databases/GTDB/gtdb_data/release226/226.0"
 THREADS=8
 
