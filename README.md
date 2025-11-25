@@ -221,6 +221,7 @@ In order to find the model you want to run.
 ```bash
 medaka tools resolve_model --auto_model <consensus/variant> <input.bam/input.fastq>
 ```
+r941_min_hac_g507
 
 ### CheckM2
 In order to use CheckM2 the DIAMOND database needs to be downloaded. This is done by:
