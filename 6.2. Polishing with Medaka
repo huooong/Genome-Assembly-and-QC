@@ -24,7 +24,7 @@ echo "---------------------------------------------------"
 
 ## Medaka parameters
 THREADS=8
-MODEL="r941_min_hac_g507" #change if needed
+MODEL="r1041_e82_400bps_hac_v5.0.0" #change if needed
 
 ## Directory for Medaka
 MEDAKA_DIR="$OUTPUT_DIR/Medaka"
