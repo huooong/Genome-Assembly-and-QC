@@ -11,9 +11,9 @@ The repository currently contains the following scripts and directories:
 
 The following modular scripts allow you to run each data processing step independently:
 - `1. Basic Statistics`
-- `2.1. NanoPlot on raw reads`
-- `2.2. NanoPlot on filtered reads`
-- `3. Filtering`
+- `2. Filtering`
+- `3.1. NanoPlot on raw reads`
+- `3.2. NanoPlot on filtered reads`
 - `4. Assembly`
 - `5. Coverage`
 - `6.1. Polishing with Racon`
@@ -37,26 +37,28 @@ The pipeline performs the following steps:
       - Total bases,
       - Average read length.
 
-**2.1. Quality assessment of raw reads using NanoPlot**
+**2.0. Read filtering using Filtlong**  
+   - Filters raw Nanopore reads to improve downstream assembly quality using the following parameters:
+      - Minimum read length: **1000 bp**,  
+      - Keep top **90%** highest-quality reads,
+      - Trim bases until only the best **500 Mbp** remain.
+
+**3.1. Quality assessment of raw reads using NanoPlot**
    - Provides summary statistics and visualisations describing the quality of unfiltered reads.
    - Generated plots include:
       - Weighted and non-weighted histogram of read lengths,
       - Length vs. Quality scatter plot,
       - Yield by length plot.
 
-**2.2. Quality assessment of filtered reads using NanoPlot**
+**3.2. Quality assessment of filtered reads using NanoPlot**
    - Runs NanoPlot on Filtlong-filtered reads to evaluate quality after filtering.
 
-**3.0. Read filtering using Filtlong**  
-   - Filters raw Nanopore reads to improve downstream assembly quality using the following parameters:
-      - Minimum read length: **1000 bp**,  
-      - Keep top **90%** highest-quality reads,
-      - Trim bases until only the best **500 Mbp** remain.
 
-**4.0. Genome assembly with Flye**  
    - Assembles genomes from filtered Nanopore reads using the following parameters:
       - Estimated genome size: **5 Mb**.
       - Threads: **4**.
+
+**4.0. Genome assembly with Flye**
 
 **5.0. Calculating Coverage**  
    - Sequencing coverage for assembled genomes are calculated using minimap2 and samtools.  
