@@ -41,7 +41,7 @@ for polished_assembly in "$RACON_DIR"/*; do
 
     echo "Starting polishing with Medaka for $sample ....."
 
-    racon_polished_assembly="$RACON_DIR/$sample/${sample}_racon_round_${RACON_ROUNDS}.fasta"
+    racon_polished_assembly="$RACON_DIR/${sample}_racon_round_${RACON_ROUNDS}.fasta"
     reads="$FILTERED_DIR/$sample/${sample}_filtered.fastq"
     
     medaka_consensus \
