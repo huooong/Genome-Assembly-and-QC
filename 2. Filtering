@@ -26,7 +26,7 @@ mkdir -p "$FILTERED_DIR"
 ## Filtlong parameters 
 MIN_LENGTH=1000        #Minimum read length to keep
 KEEP_PERCENT=90        #Percentage of best reads to retain
-TARGET_BASES=50000000   
+TARGET_BASES=500000000   
 
 ## Run Filtlong
 for file in "$INPUT_DIR"/*.fastq.gz; do
