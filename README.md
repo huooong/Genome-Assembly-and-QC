@@ -143,39 +143,53 @@ conda create -n nanoplot2 -c bioconda nanoplot
 ```bash
 conda create -n filtlong_env -c bioconda filtlong
 ```
+
 *Flye*
 ```bash
 conda create -n flye_env -c bioconda flye
 ```
+
 *minimap2*
 ```bash
 conda create -n minimap2 -c bioconda minimap2
 ```
+
 *samtools*
 ```bash
 conda create -n samtools_env -c bioconda samtools
 ```
+
 *racon*
 ```bash
 conda create -n racon_env -c bioconda racon=1.4.2
 ```
+
 *Medaka*
 ```bash
 conda create -n medaka -c conda-forge -c nanoporetech -c bioconda medaka
 conda install -c conda-forge pyabpoa
 ```
+
 *QUAST*
 ```bash
 conda create -n quast_env -c bioconda quast
 ```
+
+**BUSCO**
+```bash
+conda create -n busco_env -c conda-forge -c bioconda busco=6.0.0
+```
+
 *CheckM2*
 ```bash
 conda create -n checkm2_env -c bioconda -c conda-forge checkm2
 ```
+
 *MultiQT*
 ```bash
 conda create -n multiqc -c bioconda multiqc
 ```
+
 *GTDB-Tk*
 ```bash
 conda create -n gtdbtk_env -c conda-forge -c bioconda gtdbtk=2.5.2
