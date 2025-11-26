@@ -45,6 +45,7 @@ for assembly in "$ASSEMBLY_DIR"/*/*.fasta; do
         -l "$LINEAGE" \
         -m genome \
         -c "$CPU" \
+        -o "$sample" \
         --out_path "$sample_dir" 
 
     echo "Finished $sample" 
