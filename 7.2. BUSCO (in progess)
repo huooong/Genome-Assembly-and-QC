@@ -1,1 +1,67 @@
+#######################################
+#!/bin/bash
+
+# Directories 
+INPUT_DIR="Data"
+OUTPUT_DIR="Results"
+ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
+RACON_DIR="$OUTPUT_DIR/Racon"
+MEDAKA_DIR="$OUTPUT_DIR/Medaka"
+
+# Load conda commands
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+
+#######################################
+
+## Directory for BUSCO
+BUSCO_DIR="Results/BUSCO"
+mkdir -p "$BUSCO_DIR"
+
+## Activate BUSCO environment
+conda activate busco_env
+
+## BUSCO parameters
+LINEAGE="bacteria_odb10"    #change
+CPU=16                      #change
+
+# Log file
+LOG_FILE="$OUTPUT_DIR/busco_run.log"
+echo "BUSCO batch run started: $(date)" > "$LOG_FILE"
+
+#######################################
+# Loop through assemblies
+#######################################
+
+for ASSEMBLY in "$INPUT_DIR"/*.fa "$INPUT_DIR"/*.fna "$INPUT_DIR"/*.fasta
+do
+    # Skip if no files found
+    [ -e "$ASSEMBLY" ] || continue
+
+    SAMPLE=$(basename "$ASSEMBLY")
+    SAMPLE_NAME="${SAMPLE%%.*}"
+
+    SAMPLE_OUT="$OUTPUT_DIR/${SAMPLE_NAME}"
+    mkdir -p "$SAMPLE_OUT"
+
+    echo "---------------------------------------------------" | tee -a "$LOG_FILE"
+    echo "Running BUSCO on $SAMPLE_NAME" | tee -a "$LOG_FILE"
+    echo "Assembly: $ASSEMBLY" | tee -a "$LOG_FILE"
+
+    busco \
+        -i "$ASSEMBLY" \
+        -o "$SAMPLE_NAME" \
+        -l "$LINEAGE" \
+        -m genome \
+        -c "$CPU" \
+        --out_path "$OUTPUT_DIR" 2>&1 | tee -a "$LOG_FILE"
+
+--auto-lineage-prok
+
+    echo "Finished $SAMPLE_NAME" | tee -a "$LOG_FILE"
+
+done
+
+echo "---------------------------------------------------" | tee -a "$LOG_FILE"
+echo "All BUSCO runs completed: $(date)" | tee -a "$LOG_FILE"
 
