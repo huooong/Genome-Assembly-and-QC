@@ -1,0 +1,56 @@
+#######################################
+#!/bin/bash
+
+# Directories 
+INPUT_DIR="Data"
+OUTPUT_DIR="Results"
+RACON_DIR="$OUTPUT_DIR/Racon"
+
+# Load conda commands
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+
+# Parameters
+RACON_ROUNDS=3
+
+#######################################
+
+# Assessment of completeness and quality of assembly with BUSCO
+echo "---------------------------------------------------"
+echo "Assessing completeness and quality of assembly with BUSCO"
+echo "---------------------------------------------------"
+
+## Directory for BUSCO
+BUSCO_DIR="Results/BUSCO_racon"
+mkdir -p "$BUSCO_DIR"
+
+## Activate BUSCO environment
+conda activate busco_env
+
+## BUSCO parameters
+CPU=16        #change
+
+## Run BUSCO 
+for assembly in "$RACON_DIR"/*/racon_round_{$RACON_ROUNDS}.fasta; do
+    # Skip if no files found
+    [ -e "$assembly" ] || continue
+
+    filename=$(basename "$assembly")
+    sample="${filename%%.*}"
+    sample_dir="$BUSCO_DIR/$sample"
+    mkdir -p "$sample_dir"
+
+    echo "Running BUSCO on $sample"
+
+    busco \
+        -i "$assembly" \
+        --auto-lineage-prok \
+        -m genome \
+        -c "$CPU" \
+        --out_path "$sample_dir" 
+
+    echo "Finished $sample" 
+    echo "---------------------------------------------------"
+
+done
+conda deactivate
