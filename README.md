@@ -18,7 +18,7 @@ The following modular scripts allow you to run each data processing step indepen
 - `5. Coverage`
 - `6.1. Polishing with Racon`
 - `6.2. Polishing with Medaka`
-- `7.1. QUAST`
+- `7. QUAST`
 - `8.1. BUSCO (nonpolished)`
 - `8.2. BUSCO (racon)`
 - `8.3. BUSCO (medaka)`
