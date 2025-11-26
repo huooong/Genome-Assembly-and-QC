@@ -10,9 +10,6 @@ ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
-# Parameters
-RACON_ROUNDS=3
-
 #######################################
 
 # Assessment of completeness and quality of assembly with BUSCO
