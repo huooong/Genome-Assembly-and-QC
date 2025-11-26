@@ -19,7 +19,7 @@ RACON_ROUNDS=3
 
 # Run QUAST on output
 echo "---------------------------------------------------"
-echo "STEP 6: Assessing assembly quality with QUAST"
+echo "Assessing assembly quality with QUAST"
 echo "---------------------------------------------------"
 
 ## Load QUAST environment
