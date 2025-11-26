@@ -222,6 +222,7 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 - samtools (v1.22.1)
 - racon (v1.5.0)
 - QUAST (v5.3.0)
+- Busco (v6.0.0)
 - Medaka (v2.1.1)
 - CheckM2 (v1.1.0)
 - GTDB-Tk (v2.5.2)
@@ -235,7 +236,6 @@ In order to find the model you want to run.
 ```bash
 medaka tools resolve_model --auto_model <consensus/variant> <input.bam/input.fastq>
 ```
-r941_min_hac_g507
 
 ### CheckM2
 In order to use CheckM2 the DIAMOND database needs to be downloaded. This is done by:
@@ -269,6 +269,9 @@ Racon:
 
 QUAST:
 - https://github.com/ablab/quast
+
+BUSCO:
+- https://busco.ezlab.org/
 
 Medaka: 
 - https://github.com/nanoporetech/medaka
