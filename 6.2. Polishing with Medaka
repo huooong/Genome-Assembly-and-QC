@@ -23,8 +23,8 @@ echo "Final polishing with Medaka"
 echo "---------------------------------------------------"
 
 ## Medaka parameters
-THREADS=8
-MODEL="r1041_e82_400bps_hac_v5.0.0" #change if needed
+THREADS=8        # I changed this to 16 when I ran Medaka
+MODEL="r1041_e82_400bps_hac_v5.0.0"        
 
 ## Directory for Medaka
 MEDAKA_DIR="$OUTPUT_DIR/Medaka"
