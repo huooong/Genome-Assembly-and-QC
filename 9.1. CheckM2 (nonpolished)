@@ -5,8 +5,6 @@
 INPUT_DIR="Data"
 OUTPUT_DIR="Results"
 ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
-RACON_DIR="$OUTPUT_DIR/Racon"
-MEDAKA_DIR="$OUTPUT_DIR/Medaka"
 
 # Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
@@ -23,7 +21,7 @@ echo "---------------------------------------------------"
 conda activate checkm2_env
 
 ## Directory for CheckM2 
-CHECKM2_DIR="$OUTPUT_DIR/CheckM2"
+CHECKM2_DIR="$OUTPUT_DIR/CheckM2_nonpolished"
 mkdir -p "$CHECKM2_DIR"
 
 ## CheckM2 database path
@@ -53,4 +51,3 @@ for fasta_file in "$ASSEMBLIES"/*/*.fasta;  do
 done
 
 conda deactivate
-
