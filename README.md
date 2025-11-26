@@ -22,7 +22,7 @@ The following modular scripts allow you to run each data processing step indepen
 - `7.2. BUSCO` (In progress)
 - `8. Completeness and contamination`
 - `9. Annotation` (In progress)
-- `MultiQT`
+- `MultiQC`
 
 As the project develops, more files and folders may be added.
 
@@ -78,7 +78,7 @@ The pipeline performs the following steps:
 **8.0. Assessment of completeness and contamination with CheckM2**
    - Estimates genome completeness and contamination to assess assembly quality and reliability.
 
-**9.0. MultiQT**
+**9.0. MultiQC**
    - Combines key results and quality metrics from multiple tools into a single, interactive HTML report.
 
 ---
@@ -100,7 +100,7 @@ All analysis results are stored inside a folder called `Results`. This directory
    - Medaka/
    - QUAST/
    - CheckM2/
-   - MultiQT/
+   - MultiQC/
 
 Each of these subfolders contains one directory per sample, following the same naming scheme as the input files. 
 
@@ -175,7 +175,7 @@ conda install -c conda-forge pyabpoa
 conda create -n quast_env -c bioconda quast
 ```
 
-**BUSCO**
+*BUSCO*
 ```bash
 conda create -n busco_env -c conda-forge -c bioconda busco=6.0.0
 ```
@@ -185,7 +185,7 @@ conda create -n busco_env -c conda-forge -c bioconda busco=6.0.0
 conda create -n checkm2_env -c bioconda -c conda-forge checkm2
 ```
 
-*MultiQT*
+*MultiQC*
 ```bash
 conda create -n multiqc -c bioconda multiqc
 ```
