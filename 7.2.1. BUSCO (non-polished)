@@ -25,15 +25,16 @@ mkdir -p "$BUSCO_DIR"
 conda activate busco_env
 
 ## BUSCO parameters
-CPU=16        #change
+LINEAGE="bacteria_odb12"        #change
+CPU=16      #change
 
 ## Run BUSCO 
 for assembly in "$ASSEMBLY_DIR"/*/*.fasta; do
     # Skip if no files found
     [ -e "$assembly" ] || continue
 
-    filename=$(basename "$assembly")
-    sample="${filename%%.*}"
+    sample=$(basename "$(dirname "$assembly")")
+    
     sample_dir="$BUSCO_DIR/$sample"
     mkdir -p "$sample_dir"
 
@@ -41,7 +42,7 @@ for assembly in "$ASSEMBLY_DIR"/*/*.fasta; do
 
     busco \
         -i "$assembly" \
-        --auto-lineage-prok \
+        -l "$LINEAGE" \
         -m genome \
         -c "$CPU" \
         --out_path "$sample_dir" 
@@ -51,6 +52,7 @@ for assembly in "$ASSEMBLY_DIR"/*/*.fasta; do
 
 done
 conda deactivate
+
 
 
 
