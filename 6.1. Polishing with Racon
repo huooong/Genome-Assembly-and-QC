@@ -20,7 +20,7 @@ echo "---------------------------------------------------"
 
 ## Racon parameters
 THREADS=4
-RACON_ROUNDS=3 #change if needed
+RACON_ROUNDS=3 
 
 ## Directory for Racon-polished assemblies
 RACON_DIR="$OUTPUT_DIR/Racon"
