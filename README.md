@@ -24,7 +24,7 @@ The following modular scripts allow you to run each data processing step indepen
 - `8.3. BUSCO (medaka)`
 - `9.1. CheckM2 (nonpolished)`
 - `9.2. CheckM2 (racon)`
-  `9.3. CheckM2 (medaka)`
+- `9.3. CheckM2 (medaka)`
 - `9. Annotation` (In progress)
 - `MultiQC`
 
