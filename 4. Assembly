@@ -26,7 +26,7 @@ mkdir -p "$ASSEMBLY_DIR"
 
 ## Flye parameters
 GENOME_SIZE="5m"
-THREADS=4
+THREADS=4		#change
 
 ## Run flye
 for file in "$FILTERED_DIR"/*/*_filtered.fastq; do
