@@ -46,6 +46,7 @@ for assembly in "$RACON_DIR"/*/racon_round_"$RACON_ROUNDS".fasta; do
         -l "$LINEAGE" \
         -m genome \
         -c "$CPU" \
+        -o "$sample" \
         --out_path "$sample_dir" 
 
     echo "Finished $sample" 
