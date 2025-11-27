@@ -267,6 +267,9 @@ Filtlong:
 
 Flye:
 - https://github.com/mikolmogorov/Flye
+- Articles:
+   - **Single genome assembly:** Kolmogorov et al. (2019). Assembly of long, error-prone reads using repeat graphs. _Nature Biotechnology_ 37 (2019) 540-546.
+   - **Core algorithm:** Lin et al. (2016). Assembly of long error-prone reads using de Bruijn graphs. _PNAS_ 113 (52) E8396-E8405.
 
 Racon:
 - https://github.com/isovic/racon
