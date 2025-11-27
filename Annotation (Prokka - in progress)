@@ -1,41 +1,59 @@
+###################################
 #!/bin/bash
 
 # Directories
+INPUT_DIR="Data"
 OUTPUT_DIR="Results"
+ASSEMBLY_DIR="Results/Assembly"
+RACON_DIR="Results/Racon"
+MEDAKA_DIR="Results/Medaka"
 
 # Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
-# Activate Prokka environment
-conda activate prokka_env
+###################################
 
-# Create annotation output directory
-ANNOTATION_DIR="$OUTPUT_DIR/Annotation_prokka"
-mkdir -p "$ANNOTATION_DIR"
-
-# Parameters
-THREADS=8
-FASTA_FILE="/home/student.aau.dk/jsje21/P7/Annotation_try/PBI54877.barcode21_racon_round_3.fasta"
-SAMPLE="PBI54877_barcode21_racon_round_3"
-SAMPLE_DIR="$ANNOTATION_DIR/$SAMPLE"
-
+# Genome annotation with PROKKA
 echo "---------------------------------------------------"
 echo "Running annotation with Prokka"
 echo "---------------------------------------------------"
 
-# Run Prokka on the single FASTA file
-mkdir -p "$SAMPLE_DIR"
-prokka \
-    --outdir "$SAMPLE_DIR" \
-    --prefix "$SAMPLE" \
-    --cpus $THREADS \
-    --force \
-    "$FASTA_FILE"
+## Activate Prokka environment
+conda activate prokka_env
 
-echo "Annotation completed for $SAMPLE"
-echo "Results saved in $SAMPLE_DIR"
-echo "----------------------------"
+## Directory for Annotations
+PROKKA_DIR="$OUTPUT_DIR/Prokka"
+mkdir -p "$PROKKA_DIR"
 
-# Deactivate environment
+## Parameters
+THREADS=16
+
+## Run Prokka
+for assembly in "$ASSEMBLY_DIR"/*/*.fasta; do
+    
+    # Skip if no FASTA files found
+    [[ -e "$assembly" ]] || continue
+
+    
+    sample=$(basename "$(dirname "$assembly")")
+    sample_dir="$PROKKA_DIR/${sample}_nonpolished"
+    mkdir -p "$sample_dir"
+
+    echo "---------------------------------------------------"
+    echo "Running Prokka on $sample"
+    echo "---------------------------------------------------"
+
+    prokka \
+        --outdir "$sample_dir" \
+        --prefix "$sample" \
+        --cpus $THREADS \
+        --force \
+        "$assembly"
+
+    echo "Annotation completed for $sample"
+    echo "Results saved in $sample_dir"
+    echo "----------------------------"
+
+done
 conda deactivate
