@@ -263,7 +263,7 @@ Nanoplot:
 - https://github.com/wdecoster/NanoPlot
   
 Filtlong:
-- https://github.com/rrwick/Filtlong
+- https://github.com/rrwick/Filtlong 
 
 Flye:
 - https://github.com/mikolmogorov/Flye
