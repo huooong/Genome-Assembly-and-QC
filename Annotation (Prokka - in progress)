@@ -1,1 +1,41 @@
+#!/bin/bash
 
+# Directories
+OUTPUT_DIR="Results"
+
+# Load conda commands
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+
+# Activate Prokka environment
+conda activate prokka_env
+
+# Create annotation output directory
+ANNOTATION_DIR="$OUTPUT_DIR/Annotation_prokka"
+mkdir -p "$ANNOTATION_DIR"
+
+# Parameters
+THREADS=8
+FASTA_FILE="/home/student.aau.dk/jsje21/P7/Annotation_try/PBI54877.barcode21_racon_round_3.fasta"
+SAMPLE="PBI54877_barcode21_racon_round_3"
+SAMPLE_DIR="$ANNOTATION_DIR/$SAMPLE"
+
+echo "---------------------------------------------------"
+echo "Running annotation with Prokka"
+echo "---------------------------------------------------"
+
+# Run Prokka on the single FASTA file
+mkdir -p "$SAMPLE_DIR"
+prokka \
+    --outdir "$SAMPLE_DIR" \
+    --prefix "$SAMPLE" \
+    --cpus $THREADS \
+    --force \
+    "$FASTA_FILE"
+
+echo "Annotation completed for $SAMPLE"
+echo "Results saved in $SAMPLE_DIR"
+echo "----------------------------"
+
+# Deactivate environment
+conda deactivate
