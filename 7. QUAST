@@ -39,7 +39,7 @@ for assembly in "$ASSEMBLY_DIR"/*; do
 
     raw_assembly="$ASSEMBLY_DIR/$sample/assembly.fasta"
     racon_polished="$RACON_DIR/$sample/racon_round_${RACON_ROUNDS}.fasta"
-    medaka_polished="$MEDAKA_DIR/$sample/medaka.fasta" #CHANGE THIS
+    medaka_polished="$MEDAKA_DIR/$sample/consensus.fasta" 
 
     echo "Running QUAST for $sample ....."
     
