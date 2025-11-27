@@ -32,14 +32,14 @@ mkdir -p "$PROKKA_DIR"
 THREADS=16
 
 ## Run Prokka
-for assembly in "$ASSEMBLY_DIR"/*17/racon_round_"$RACON_ROUNDS".fasta; do
+for assembly in "$RACON_DIR"/*17/racon_round_"$RACON_ROUNDS".fasta; do
     
     # Skip if no FASTA files found
     [[ -e "$assembly" ]] || continue
 
     
     sample=$(basename "$(dirname "$assembly")")
-    sample_dir="$PROKKA_DIR/${sample}_nonpolished"
+    sample_dir="$PROKKA_DIR/${sample}_racon"
     mkdir -p "$sample_dir"
 
     echo "---------------------------------------------------"
