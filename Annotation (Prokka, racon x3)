@@ -1,0 +1,61 @@
+###################################
+#!/bin/bash
+
+# Directories
+INPUT_DIR="Data"
+OUTPUT_DIR="Results"
+ASSEMBLY_DIR="Results/Assembly"
+RACON_DIR="Results/Racon"
+MEDAKA_DIR="Results/Medaka"
+
+# Load conda commands
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+
+# Parameters
+RACON_ROUNDS=3
+###################################
+
+# Genome annotation with PROKKA
+echo "---------------------------------------------------"
+echo "Running annotation with Prokka"
+echo "---------------------------------------------------"
+
+## Activate Prokka environment
+conda activate prokka_env
+
+## Directory for Annotations
+PROKKA_DIR="$OUTPUT_DIR/Prokka"
+mkdir -p "$PROKKA_DIR"
+
+## Parameters
+THREADS=16
+
+## Run Prokka
+for assembly in "$ASSEMBLY_DIR"/*17/racon_round_"$RACON_ROUNDS".fasta; do
+    
+    # Skip if no FASTA files found
+    [[ -e "$assembly" ]] || continue
+
+    
+    sample=$(basename "$(dirname "$assembly")")
+    sample_dir="$PROKKA_DIR/${sample}_nonpolished"
+    mkdir -p "$sample_dir"
+
+    echo "---------------------------------------------------"
+    echo "Running Prokka on $sample"
+    echo "---------------------------------------------------"
+
+    prokka \
+        --outdir "$sample_dir" \
+        --prefix "$sample" \
+        --cpus $THREADS \
+        --force \
+        "$assembly"
+
+    echo "Annotation completed for $sample"
+    echo "Results saved in $sample_dir"
+    echo "----------------------------"
+
+done
+conda deactivate
