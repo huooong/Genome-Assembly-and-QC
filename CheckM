@@ -1,0 +1,63 @@
+###################################
+#!/bin/bash
+
+# Directories
+INPUT_DIR="Data"          
+OUTPUT_DIR="Results"
+MEDAKA_DIR="$OUTPUT_DIR/Medaka"
+
+# Load conda commands
+CONDA_BASE=$(dirname $(dirname $(which conda)))
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+
+# Conda environment
+CHECKM="checkm_env"
+
+###################################
+
+# CheckM
+echo "---------------------------------------------------"
+echo "Running CheckM lineage workflow"
+echo "---------------------------------------------------"
+
+## Directory for CheckM
+CHECKM_DIR="$OUTPUT_DIR/CheckM"
+mkdir -p "$CHECKM_DIR"
+
+## Activate CheckM environment
+conda activate "$CHECKM"
+
+## CheckM parameters
+THREADS=16
+
+## Run CheckM
+for file in "$MEDAKA_DIR"/*; do
+    [ -e "$file" ] || continue
+
+    sample=$(basename "$file")
+    sample="${sample%.*}"
+
+    medaka_assembly="$MEDAKA_DIR/$sample/consensus.fasta"
+    echo "Processing: $sample"
+
+    # Make sample output folder
+    sample_dir="$CHECKM_DIR/$sample"
+    mkdir -p "$sample_dir"
+
+    # Run CheckM
+    checkm lineage_wf \
+        -x fa \
+        --reduced_tree \
+        -t $THREADS \
+        "$medaka_assembly" \
+        "$sample_dir"
+
+done
+
+echo "---------------------------------------------------"
+echo "CheckM analysis complete!"
+echo "Results saved in: $CHECKM_DIR"
+echo "---------------------------------------------------"
+
+# Deactivate environment
+conda deactivate
