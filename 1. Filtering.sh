@@ -17,7 +17,7 @@ echo "Filtering reads using Filtlong"
 echo "---------------------------------------------------"
 
 ## Load Filtlong environment
-conda activate filtlong_env
+conda activate $FILTLONG
 
 ## Directory for filtered results
 FILTERED_DIR="$OUTPUT_DIR/Filtered"
@@ -47,4 +47,3 @@ for file in "$INPUT_DIR"/*.fastq.gz; do
 
 done
 conda deactivate
-
