@@ -55,7 +55,7 @@ for file in "$INPUT_DIR"/*.fastq.gz; do
         "$file" > "$sample_dir/${sample}_filtered.fastq"
 
     echo "Filtered $sample has been saved in $sample_dir"
-    echo "---------------------------------------------------"
+    echo "-----"
 
 done
 conda deactivate
@@ -87,10 +87,8 @@ for file in "$INPUT_DIR"/*.fastq.gz; do
         --prefix "$sample" \
         --tsv_stats --raw
     
-    echo 
-    
     echo "NanoPlot results for $sample have been saved in $sample_dir"
-    echo "---------------------------------------------------"
+    echo "-----"
 
 done
 conda deactivate
@@ -122,10 +120,8 @@ for file in "$FILTERED_DIR"/*/*_filtered.fastq; do
         --prefix "$sample" \
         --tsv_stats --raw
     
-    echo 
-    
     echo "NanoPlot results for $sample have been saved in $sample_dir"
-    echo "---------------------------------------------------"
+    echo "-----"
 
 done
 conda deactivate
@@ -151,7 +147,7 @@ THREADS=16		#change
 ## Run flye
 for file in "$FILTERED_DIR"/*/*_filtered.fastq; do
 	sample=$(basename "$file" _filtered.fastq)
-	echo "Assembling $sample..."
+	echo "Assembling $sample ....."
 
 	flye \
 		--nano-hq "$file" \
@@ -160,7 +156,7 @@ for file in "$FILTERED_DIR"/*/*_filtered.fastq; do
 		--threads "$THREADS"
 
 echo "Assembly saved in $ASSEMBLY_DIR"
-echo "---------------------------------------------------"
+echo "-----"
 
 done
 conda deactivate
@@ -208,6 +204,7 @@ for assembly in "$ASSEMBLY_DIR"/*; do
     echo -e "$sample\t$mean_coverage" >> "$COVERAGE_FILE"
 
     echo "Mean coverage for $sample: $mean_coverage"
+	echo "-----"
     conda deactivate
 done
 
@@ -254,7 +251,7 @@ for polished_assembly in "$ASSEMBLY_DIR"/*; do
 
     echo
     echo "Completed Medaka for $sample. Results have been saved in "$MEDAKA_DIR""
-    echo "---------------------------------------------------"
+    echo "-----"
 done
 conda deactivate
 
@@ -301,7 +298,7 @@ for assembly in "$ASSEMBLY_DIR"/*; do
     fi
     
     echo "QUAST report saved in: $QUAST_DIR"
-    echo "---------------------------------------------------"
+    echo "-----"
 done
 conda deactivate
 
@@ -354,6 +351,7 @@ for assembly in "$MEDAKA_DIR"/*; do
         "$CHECKM_DIR/$sample"
 
     echo "CheckM completed for $sample ....."
+	echo "-----"
 
 done
 conda deactivate
@@ -387,7 +385,7 @@ for fasta_file in "$ASSEMBLIES"/*/*.fasta;  do
     sample_dir="$CHECKM2_DIR/$sample/Nonpolished"
     mkdir -p "$sample_dir"
 
-    echo "Running CheckM2 on sample: $sample"
+    echo "Running CheckM2 on $sample ....."
     checkm2 predict \
         --threads $THREADS \
         --input "$fasta_file" \
@@ -395,7 +393,7 @@ for fasta_file in "$ASSEMBLIES"/*/*.fasta;  do
         --database_path "$CHECKM2_DB"
 
     echo "Results saved in $sample_dir"
-    echo "----------------------------"
+    echo "-----"
 done
 conda deactivate
 
@@ -424,7 +422,7 @@ for fasta_file in "$ASSEMBLIES"/*/*.fasta;  do
     sample_dir="$CHECKM2_DIR/$sample/Medaka"
     mkdir -p "$sample_dir"
 
-    echo "Running CheckM2 on sample: $sample"
+    echo "Running CheckM2 on $sample ....."
     checkm2 predict \
         --threads $THREADS \
         --input "$fasta_file" \
@@ -432,7 +430,7 @@ for fasta_file in "$ASSEMBLIES"/*/*.fasta;  do
         --database_path "$CHECKM2_DB"
 
     echo "Results saved in $sample_dir"
-    echo "----------------------------"
+    echo "-----"
 done
 conda deactivate
 
