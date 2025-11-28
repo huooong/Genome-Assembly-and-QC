@@ -189,6 +189,11 @@ conda create -n busco_env -c conda-forge -c bioconda busco=6.0.0
 conda create -n checkm2_env -c bioconda -c conda-forge checkm2
 ```
 
+*Bakta*
+```bash
+conda create -n bakta1.10.3_env -c conda-forge -c bioconda bakta=1.10.3
+```
+
 *MultiQC*
 ```bash
 conda create -n multiqc -c bioconda multiqc
@@ -226,9 +231,9 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 - samtools (v1.22.1)
 - racon (v1.5.0)
 - QUAST (v5.3.0)
-- Busco (v6.0.0)
 - Medaka (v2.1.1)
 - CheckM2 (v1.1.0)
+- Bakta (v1.10.3)
 - GTDB-Tk (v2.5.2)
 
 ---
