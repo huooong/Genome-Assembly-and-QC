@@ -7,82 +7,60 @@ The pipeline is designed to process raw sequencing data, perform quality assessm
 
 ## Repository Contents
 The repository currently contains the following scripts and directories:
-- `0. Full Script`: (In progress) A comprehensive pipeline script that automates the entire analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
+- `Pipeline.sh`: A comprehensive pipeline script that automates the entire analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
+- `Pipeline.sbatch`: Allows you to submit the pipeline as a SLURM job.
 
 The following modular scripts allow you to run each data processing step independently:
-- `1. Basic Statistics`
-- `2. Filtering`
-- `3.1. NanoPlot on raw reads`
-- `3.2. NanoPlot on filtered reads`
-- `4. Assembly`
-- `5. Coverage`
-- `6.1. Polishing with Racon`
-- `6.2. Polishing with Medaka`
-- `7. QUAST`
-- `8.1. BUSCO (nonpolished)`
-- `8.2. BUSCO (racon)`
-- `8.3. BUSCO (medaka)`
-- `9.1. CheckM2 (nonpolished)`
-- `9.2. CheckM2 (racon)`
-- `9.3. CheckM2 (medaka)`
+- `1. Filtering`
+- `2.1. NanoPlot on raw reads`
+- `2.2. NanoPlot on filtered reads`
+- `3. Assembly`
+- `4. Coverage`
+- `5. Polishing with Medaka`
+- `6. QUAST`
+- `7. CheckM`
+- `8. CheckM2`
 - `9. Annotation` (In progress)
 - `MultiQC`
-
-As the project develops, more files and folders may be added.
+- `GTDB-Tk` (In pregress)
 
 ---
 
 ## Workflow Overview
 The pipeline performs the following steps:
 
-**1.0. Basic statistics on raw FASTQ reads**  
-   - Generate basic sequencing statistics for each samples, including:
-      - Read counts,
-      - Total bases,
-      - Average read length.
-
-**2.0. Read filtering using Filtlong**  
+**Read filtering using Filtlong**  
    - Filters raw Nanopore reads to improve downstream assembly quality using the following parameters:
       - Minimum read length: **1000 bp**,  
       - Keep top **90%** highest-quality reads,
       - Trim bases until only the best **500 Mbp** remain.
 
-**3.1. Quality assessment of raw reads using NanoPlot**
-   - Provides summary statistics and visualisations describing the quality of unfiltered reads.
+**Quality assessment of raw reads using NanoPlot**
+   - Provides summary statistics and visualisations describing the quality of unfiltered and filtered reads.
    - Generated plots include:
       - Weighted and non-weighted histogram of read lengths,
       - Length vs. Quality scatter plot,
       - Yield by length plot.
-
-**3.2. Quality assessment of filtered reads using NanoPlot**
-   - Runs NanoPlot on Filtlong-filtered reads to evaluate quality after filtering.
-
-
+      - 
+**Genome assembly with Flye**
    - Assembles genomes from filtered Nanopore reads using the following parameters:
       - Estimated genome size: **5 Mb**.
       - Threads: **4**.
 
-**4.0. Genome assembly with Flye**
-
-**5.0. Calculating Coverage**  
+**Calculating Coverage**  
    - Sequencing coverage for assembled genomes are calculated using minimap2 and samtools.  
 
-**6.1 Polishing assemblies using Racon**  
-   - Performs iterative polishing (**3 iterations**) consisting of:
-      - Mapping reads with minimap2.  
-      - Polishing with Racon.
-
-**6.2 Final polish using Medaka**  
+**Polish assembly using Medaka**  
    - Refines assemblies using Medaka with the model:
       - `r1041_e82_400bps_hac_v5.0.0`
 
-**7.0. Assembly quality assessment with QUAST**
+**Assembly quality assessment with QUAST**
    - Evaluates assembly statistics including N50, genome size, misassemblies, and GC content.
   
-**8.0. Assessment of completeness and contamination with CheckM2**
+**Assessment of completeness and contamination with CheckM and CheckM2**
    - Estimates genome completeness and contamination to assess assembly quality and reliability.
 
-**9.0. MultiQC**
+**MultiQC**
    - Combines key results and quality metrics from multiple tools into a single, interactive HTML report.
 
 ---
@@ -90,7 +68,7 @@ The pipeline performs the following steps:
 ### Project Structure
 This project is organised to streamline the processing and analysis of sequencing data. 
 
-The main project directory is called `P7`. Within `P7`, there is a `Data` directory containing all raw FASTQ files (`*.fastq.gz`) generated from Oxford Nanopore sequencing. 
+The main project directory is called `Working_Directory`. Within `Working_Directory`, there is a `Data` directory containing all raw FASTQ files (`*.fastq.gz`) generated from Oxford Nanopore sequencing. 
 
 The fastq.gz files are named `PBI54877.barcodeX.fastq.gz`, where X = 17-36, corresponding to 20 individual samples.
 
@@ -100,9 +78,10 @@ All analysis results are stored inside a folder called `Results`. This directory
    - NanoPlot/
    - NanoPlot_filtered/
    - Assembly/
-   - Racon/
+   - Coverage/
    - Medaka/
    - QUAST/
+   - CheckM/
    - CheckM2/
    - MultiQC/
 
@@ -111,34 +90,49 @@ Each of these subfolders contains one directory per sample, following the same n
 ---
 
 ## Setup and How to Run the Pipeline
-1. Download/copy the script.
+1. Download/copy the `Pipeline.sh` and `Pipeline.sbatch` to your `Working_Directory`
    
-2. Make the script executable.
-Before running a script for the first time, execute the following code:
+2. Prepare input files.
+Place all raw FASTQ files in the directory `Data`.
+```bash
+cp -r /raw_data/MA/tinyearth/20251119_np_PBI54877/*.fastq.gz ~/Working_Directory/Data/
+``` 
+Make sure that only the samples you want to analyse are in the `Data` directory. 
+
+3. Go to the terminal, log on, and go to your working directory:
+```bash
+cd Working_Directory
+````
+
+4. Run the pipeline:
+```bash
+sbatch Pipeline.sbatch
+````
+
+
+### If you want to play around with the modular scripts in VS Code: 
+You can make the scripts executable. This is done by executing the following code before running a script for the first time:
 ```bash
 chmod +x file_name.sh
 ````
 Replace `file_name.sh` with the specific script. 
 
-3. Prepare input files.
-Place all raw FASTQ files in the directory `Data`.
-```bash
-cp -r /raw_data/MA/tinyearth/20251119_np_PBI54877/*.fastq.gz ~/P7/Data/
-``` 
-
-5. Run the script.
+To run the script.
 ```bash
 ./file_name.sh
 ```
-The script will process all FASTQ files found in the `Data`-directory and output results to automatically created result folders.
 
 ---
 
-### Conda Environments
+## Conda Environments
 Conda environments allow you to create isolated spaces with specific packages and versions, avoiding conflicts between projects.
 
-If you have not done it yet, you need to create the needed environments: 
+You can check your existing environments using: 
+```bash
+conda env list
+```
 
+If you have not done it yet, you need to create the needed environments: 
 *Nanoplot*
 ```bash
 conda create -n nanoplot2 -c bioconda nanoplot
@@ -222,7 +216,7 @@ Before activating conda environment
 
 ---
 
-### Software Requirements
+## Software Requirements
 This pipeline relies on several bioinformatics tools and libraries. We recommend using Conda to manage dependencies easily:
 - NanoPlot (v1.46.1)
 - Filtlong (v0.2.1)
@@ -236,31 +230,7 @@ This pipeline relies on several bioinformatics tools and libraries. We recommend
 - Bakta (v1.10.3)
 - GTDB-Tk (v2.5.2)
 
----
-## ... (section in progress)
-
-### Medaka 
-**Models**
-In order to find the model you want to run. 
-```bash
-medaka tools resolve_model --auto_model <consensus/variant> <input.bam/input.fastq>
-```
-
-### CheckM2
-In order to use CheckM2 the DIAMOND database needs to be downloaded. This is done by:
-```bash
-checkm2 database --download
-```
-I moved the database folder to be inside my working directory, but you can do what you want to, just make sure to put down the right path in the script.
-
-Testrun can be done using:
-```bash
-checkm2 testrun
-```
-
-### GTDB-Tk
-
-
+  
 ---
 
 ## Resources
