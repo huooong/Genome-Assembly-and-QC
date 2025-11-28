@@ -6,22 +6,22 @@ The pipeline is designed to process raw sequencing data, perform quality assessm
 ---
 
 ## Repository Contents
-The repository currently contains the following scripts and directories:
-- `Pipeline.sh`: A comprehensive pipeline script that automates the entire analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
+The repository currently contains the following scripts:
+- `Pipeline.sh`: A pipeline script that automates the analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
 - `Pipeline.sbatch`: Allows you to submit the pipeline as a SLURM job.
 
 The following modular scripts allow you to run each data processing step independently:
 - `1. Filtering`
 - `2.1. NanoPlot on raw reads`
 - `2.2. NanoPlot on filtered reads`
-- `3. Assembly`
+- `3. Assembly with Flye`
 - `4. Coverage`
 - `5. Polishing with Medaka`
 - `6. QUAST`
 - `7. CheckM`
 - `8. CheckM2`
-- `9. Annotation` (In progress)
-- `MultiQC`
+- `Annotation` (In progress)
+- `MultiQC` 
 - `GTDB-Tk` (In pregress)
 
 ---
@@ -90,16 +90,17 @@ Each of these subfolders contains one directory per sample, following the same n
 ---
 
 ## Setup and How to Run the Pipeline
-1. Download/copy the `Pipeline.sh` and `Pipeline.sbatch` to your `Working_Directory`
-   
+1. Download/copy the `Pipeline.sh` and `Pipeline.sbatch` to `Working_Directory`
+
+
 2. Prepare input files.
-Place all raw FASTQ files in the directory `Data`.
+Place all raw FASTQ files in the directory `Working_Directory/Data`.
 ```bash
 cp -r /raw_data/MA/tinyearth/20251119_np_PBI54877/*.fastq.gz ~/Working_Directory/Data/
 ``` 
 Make sure that only the samples you want to analyse are in the `Data` directory. 
 
-3. Go to the terminal, log on, and go to your working directory:
+3. Go to the terminal, log on, and change to your working directory:
 ```bash
 cd Working_Directory
 ````
@@ -109,17 +110,13 @@ cd Working_Directory
 sbatch Pipeline.sbatch
 ````
 
-
-### If you want to play around with the modular scripts in VS Code: 
-You can make the scripts executable. This is done by executing the following code before running a script for the first time:
+5. Status:
 ```bash
-chmod +x file_name.sh
-````
-Replace `file_name.sh` with the specific script. 
+squeue -u $USER
+```
 
-To run the script.
 ```bash
-./file_name.sh
+tail -f logs/genome_assembly_and_QC_<jobID>.out
 ```
 
 ---
@@ -261,6 +258,19 @@ Medaka:
 CheckM2:
 - https://github.com/chklovski/CheckM2/
 
+
+---
+## If you want to play around with the modular scripts in VS Code: 
+You can make the scripts executable. This is done by executing the following code before running a script for the first time:
+```bash
+chmod +x file_name.sh
+````
+Replace `file_name.sh` with the specific script. 
+
+To run the script.
+```bash
+./file_name.sh
+```
 
 
 
