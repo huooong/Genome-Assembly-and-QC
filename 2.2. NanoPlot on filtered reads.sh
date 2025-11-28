@@ -10,15 +10,18 @@ FILTERED_DIR="$OUTPUT_DIR/Filtered"
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
+# Conda environment
+NANOPLOT="nanoplot2"
+
 ###################################
 
-# Assess read quality with NanoPlot
+# Assess read quality of filtered reads with NanoPlot
 echo "---------------------------------------------------"
-echo "Assessing read quality with NanoPlot after filtering"
+echo "Assessing read quality of filtered reads with NanoPlot after filtering"
 echo "---------------------------------------------------"
 
 ## Load NanoPlot environment
-conda activate nanoplot2
+conda activate $NANOPLOT
 
 ## Directory for NanoPlot Results
 NANOPLOT_DIR="$OUTPUT_DIR/NanoPlot_filtered"
