@@ -13,9 +13,9 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 NANOPLOT="nanoplot2"
 ###################################
 
-# Assess read quality with NanoPlot
+# Assess read quality of raw reads with NanoPlot
 echo "---------------------------------------------------"
-echo "Assessing read quality with NanoPlot"
+echo "Assessing read quality of raw reads with NanoPlot"
 echo "---------------------------------------------------"
 
 ## Load NanoPlot environment
@@ -45,5 +45,3 @@ for file in "$INPUT_DIR"/*.fastq.gz; do
 
 done
 conda deactivate
-
-
