@@ -29,13 +29,13 @@ The following modular scripts allow you to run each data processing step indepen
 ## Workflow Overview
 The pipeline performs the following steps:
 
-**Read filtering using Filtlong**  
+**1. Read filtering using Filtlong**  
    - Filters raw Nanopore reads to improve downstream assembly quality using the following parameters:
       - Minimum read length: **1000 bp**,  
       - Keep top **90%** highest-quality reads,
       - Trim bases until only the best **500 Mbp** remain.
 
-**Quality assessment of raw reads using NanoPlot**
+**2. Quality assessment of raw reads using NanoPlot**
    - Provides summary statistics and visualisations describing the quality of unfiltered and filtered reads.
    - Generated plots include:
       - Weighted and non-weighted histogram of read lengths,
