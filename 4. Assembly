@@ -34,7 +34,7 @@ for file in "$FILTERED_DIR"/*/*_filtered.fastq; do
 	echo "Assembling $sample..."
 
 	flye \
-		--nano-raw "$file" \
+		--nano-hq "$file" \
 		--genome-size "$GENOME_SIZE" \
 		--out-dir "$ASSEMBLY_DIR/$sample" \
 		--threads "$THREADS"
