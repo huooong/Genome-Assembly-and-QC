@@ -12,16 +12,16 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 ###################################
 
-# Run CheckM2
+# Run CheckM2 on polished assemblies
 echo "---------------------------------------------------"
-echo "Assessing completeness and contamination with CheckM2"
+echo "Assessing completeness and contamination of polished assemblies with CheckM2"
 echo "---------------------------------------------------"
 
 ## Load CheckM2 environment
-conda activate checkm2_env
+conda activate $CHECKM2
 
 ## Directory for CheckM2 
-CHECKM2_DIR="$OUTPUT_DIR/CheckM2_medaka"
+CHECKM2_DIR="$OUTPUT_DIR/CheckM2"
 mkdir -p "$CHECKM2_DIR"
 
 ## CheckM2 database path
@@ -30,13 +30,13 @@ export CHECKM2DB="$CHECKM2_DB"
 
 ## CheckM2 parameters
 THREADS=16      #change
-ASSEMBLIES="$ASSEMBLY_DIR" #change if needed
+ASSEMBLIES="$MEDAKA_DIR" #change if needed
 echo "Running CheckM2 on polished assemblies in $ASSEMBLIES"
 
 ## Run CheckM2
 for fasta_file in "$ASSEMBLIES"/*/*.fasta;  do
     sample=$(basename "$(dirname "$fasta_file")")
-    sample_dir="$CHECKM2_DIR/$sample"
+    sample_dir="$CHECKM2_DIR/$sample/Medaka"
     mkdir -p "$sample_dir"
 
     echo "Running CheckM2 on sample: $sample"
@@ -49,5 +49,4 @@ for fasta_file in "$ASSEMBLIES"/*/*.fasta;  do
     echo "Results saved in $sample_dir"
     echo "----------------------------"
 done
-
 conda deactivate
