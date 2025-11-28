@@ -29,6 +29,7 @@ conda activate "$CHECKM"
 
 ## CheckM parameters
 THREADS=16
+CHECKM_DB="database/Check
 
 ## Run CheckM
 for file in "$MEDAKA_DIR"/*; do
