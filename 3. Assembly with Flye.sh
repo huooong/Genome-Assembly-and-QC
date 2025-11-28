@@ -10,15 +10,17 @@ FILTERED_DIR="$OUTPUT_DIR/Filtered"
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
+# Conda environments
+FLYE="flye_env"
 ###################################
 
-# Assembly of sequencing data
+# Assembly with Flye
 echo "---------------------------------------------------"
 echo "Assembling sequenced data using Flye Assembler"
 echo "---------------------------------------------------"
 
 ## Load Flye environment
-conda activate flye_env
+conda activate $FLYE
 
 ## Directory for assemblies
 ASSEMBLY_DIR="$OUTPUT_DIR/Assembly"
@@ -44,4 +46,3 @@ echo "---------------------------------------------------"
 
 done
 conda deactivate
-
