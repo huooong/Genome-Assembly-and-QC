@@ -9,6 +9,8 @@ OUTPUT_DIR="Results"
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
+# Conda environment
+NANOPLOT="nanoplot2"
 ###################################
 
 # Assess read quality with NanoPlot
@@ -17,7 +19,7 @@ echo "Assessing read quality with NanoPlot"
 echo "---------------------------------------------------"
 
 ## Load NanoPlot environment
-conda activate nanoplot2
+conda activate $NANOPLOT
 
 ## Directory for NanoPlot Results
 NANOPLOT_DIR="$OUTPUT_DIR/NanoPlot"
