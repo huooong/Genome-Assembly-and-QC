@@ -28,37 +28,40 @@ mkdir -p "$CHECKM_DIR"
 conda activate "$CHECKM"
 
 ## CheckM parameters
-THREADS=16
-CHECKM_DB="database/Check
+THREADS=8
+CHECKM_DB="/databases/checkm_data_2015_01_16/"
+export CHECKM_DB
 
-## Run CheckM
-for file in "$MEDAKA_DIR"/*; do
-    [ -e "$file" ] || continue
+## Make Genome Directory
+GENOME_DIR="Results/CheckM/Genomes"
+mkdir -p "$GENOME_DIR"
 
-    sample=$(basename "$file")
-    sample="${sample%.*}"
+echo "Collecting genomes for CheckM ....."
 
-    medaka_assembly="$MEDAKA_DIR/$sample/consensus.fasta"
-    echo "Processing: $sample"
+for assembly in "$MEDAKA_DIR"/*; do
+    sample=$(basename "$assembly")
+    fasta="$assembly/consensus.fasta"
 
-    # Make sample output folder
-    sample_dir="$CHECKM_DIR/$sample"
-    mkdir -p "$sample_dir"
+    if [ -f "$fasta" ]; then
+        sample_dir="$GENOME_DIR/$sample"
+        mkdir -p "$sample_dir"
 
-    # Run CheckM
+        cp "$fasta" "$sample_dir/$sample.fasta"
+        echo "Added $sample.fasta to $sample_dir"
+    else
+        echo "WARNING: $fasta not found"
+    fi
+
+    echo "Running CheckM for $sample ....."
+
     checkm lineage_wf \
-        -x fa \
         --reduced_tree \
         -t $THREADS \
-        "$medaka_assembly" \
-        "$sample_dir"
+        -x fasta \
+        "$sample_dir" \
+        "$CHECKM_DIR/$sample"
+
+    echo "CheckM completed for $sample ....."
 
 done
-
-echo "---------------------------------------------------"
-echo "CheckM analysis complete!"
-echo "Results saved in: $CHECKM_DIR"
-echo "---------------------------------------------------"
-
-# Deactivate environment
 conda deactivate
