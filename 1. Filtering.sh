@@ -9,6 +9,9 @@ OUTPUT_DIR="Results"
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
+# Conda environment
+FILTLONG="filtlong_env"
+
 ###################################
 
 # Filter reads using Filtlong
