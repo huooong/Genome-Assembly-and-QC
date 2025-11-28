@@ -25,7 +25,7 @@ CHECKM2_DIR="$OUTPUT_DIR/CheckM2_nonpolished"
 mkdir -p "$CHECKM2_DIR"
 
 ## CheckM2 database path
-CHECKM2_DB="Database/CheckM2_database/uniref100.KO.1.dmnd"
+CHECKM2_DB="/databases/checkm2/CheckM2_database/uniref100.KO.1.dmnd"
 export CHECKM2DB="$CHECKM2_DB"
 
 ## CheckM2 parameters
