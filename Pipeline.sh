@@ -10,7 +10,6 @@ CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 # Conda environments
-## check in terminal: 'conda env list'
 NANOPLOT="nanoplot2"
 FILTLONG="filtlong_env"
 FLYE="flye_env"
