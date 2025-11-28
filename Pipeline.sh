@@ -167,13 +167,6 @@ conda deactivate
 
 ######################################################################
 
-
-
-
-
-
-
-
 # Calculate coverage for all assemblies
 echo "---------------------------------------------------"
 echo "Calculating coverage"
@@ -224,13 +217,6 @@ rm "$COVERAGE_DIR/"*.bam.bai
 rm "$COVERAGE_DIR/"*.txt
 
 ######################################################################
-
-
-
-
-
-
-
 
 # Polishing with Medaka
 echo "---------------------------------------------------"
@@ -283,7 +269,7 @@ echo "---------------------------------------------------"
 conda activate $QUAST
 
 ## Directory for QUAST
-QUAST_DIR="$OUTPUT_DIR/QUAST"
+QUAST_DIR="$OUTPUT_DIR/Quast"
 mkdir -p "$QUAST_DIR"
 
 ## QUAST parameters
@@ -321,9 +307,9 @@ conda deactivate
 
 ######################################################################
 
-# Run CheckM2
+# Run CheckM2 on nonpolished assemblies
 echo "---------------------------------------------------"
-echo "Assessing completeness and contamination on nonpolished assemblies with CheckM2"
+echo "Assessing completeness and contamination of nonpolished assemblies with CheckM2"
 echo "---------------------------------------------------"
 
 ## Load CheckM2 environment
@@ -334,7 +320,7 @@ CHECKM2_DIR="$OUTPUT_DIR/CheckM2"
 mkdir -p "$CHECKM2_DIR"
 
 ## CheckM2 database path
-CHECKM2_DB="Database/CheckM2_database/uniref100.KO.1.dmnd"
+CHECKM2_DB="/databases/checkm2/CheckM2_database/uniref100.KO.1.dmnd"
 export CHECKM2DB="$CHECKM2_DB"
 
 ## CheckM2 parameters
@@ -362,7 +348,7 @@ conda deactivate
 
 ######################################################################
 
-# Run CheckM2
+# Run CheckM2 on polished assemblies
 echo "---------------------------------------------------"
 echo "Assessing completeness and contamination of polished assemblies with CheckM2"
 echo "---------------------------------------------------"
@@ -370,12 +356,8 @@ echo "---------------------------------------------------"
 ## Load CheckM2 environment
 conda activate $CHECKM2
 
-## Directory for CheckM2 
-CHECKM2_DIR="$OUTPUT_DIR/CheckM2_medaka"
-mkdir -p "$CHECKM2_DIR"
-
 ## CheckM2 database path
-CHECKM2_DB="Database/CheckM2_database/uniref100.KO.1.dmnd"
+CHECKM2_DB="/databases/checkm2/CheckM2_database/uniref100.KO.1.dmnd"
 export CHECKM2DB="$CHECKM2_DB"
 
 ## CheckM2 parameters
