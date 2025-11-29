@@ -17,7 +17,7 @@ MINIMAP2="minimap2"
 SAMTOOLS="samtools_env"
 MEDAKA="medaka"
 QUAST="quast_env"
-CHECKM=
+CHECKM="checkm_env"
 CHECKM2="checkm2_env"
 BAKTA="bakta1.10.3_env"
 
