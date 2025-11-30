@@ -9,7 +9,7 @@ GENOME_DIR="$OUTPUT_DIR/CheckM/Genomes"
 # Load conda commands
 CONDA_BASE=$(dirname $(dirname $(which conda)))
 source "$CONDA_BASE/etc/profile.d/conda.sh"
-GTDBTK="gtdbtk-2.5.2"
+GTDBTK="gtdbtk_2.5.2"
 
 ###################################
 
