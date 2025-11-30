@@ -28,7 +28,7 @@ mkdir -p "$BAKTA_DIR"
 conda activate $BAKTA
 
 ## Bakta parameters
-THREADS=8
+THREADS=32
 BAKTA_DB="Bakta_Database/db"
 
 ## Run Bakta on all assemblies
@@ -52,6 +52,5 @@ for polished_assembly in "$MEDAKA_DIR"/*; do
 
 done
 conda deactivate
-
 
 
