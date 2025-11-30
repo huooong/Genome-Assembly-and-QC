@@ -29,7 +29,7 @@ conda activate $BAKTA
 
 ## Bakta parameters
 THREADS=8
-BAKTA_DB="/Bakta_Database/db"
+BAKTA_DB="Bakta_Database/db"
 
 ## Run Bakta on all assemblies
 for polished_assembly in "$MEDAKA_DIR"/*; do
@@ -44,6 +44,7 @@ for polished_assembly in "$MEDAKA_DIR"/*; do
       --db $BAKTA_DB \
       --threads $THREADS \
       --output $sample_dir \
+      --force \
       "$medaka_polished"
 
     echo "Done with $sample"
@@ -51,5 +52,6 @@ for polished_assembly in "$MEDAKA_DIR"/*; do
 
 done
 conda deactivate
+
 
 
