@@ -48,4 +48,3 @@ for assembly_dir in "$GENOME_DIR"/*; do
     echo
 done
 conda deactivate
-
