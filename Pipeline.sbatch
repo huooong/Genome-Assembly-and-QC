@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=genome_assembly_and_QC
-#SBATCH --output=logs/genome_assembly_and_QC_%j.out
-#SBATCH --error=logs/genome_assembly_and_QC_%j.err
+#SBATCH --output=Logs/genome_assembly_and_QC_%j.out
+#SBATCH --error=Logs/genome_assembly_and_QC_%j.err
 #SBATCH --time=48:00:00
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=32G
