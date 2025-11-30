@@ -202,7 +202,7 @@ conda create -n multiqc -c bioconda multiqc
 
 *GTDB-Tk*
 ```bash
-conda create -n gtdbtk_env -c conda-forge -c bioconda gtdbtk=2.5.2
+conda create -n gtdbtk_v2.5.2 -c conda-forge -c bioconda gtdbtk=2.5.2 python=3.12
 ```
 
 ---
