@@ -32,7 +32,7 @@ mkdir -p $GTDBTK_DIR
 ## Run GTDB-Tk
 for assembly_dir in "$GENOME_DIR"/*; do
     sample=$(basename "$assembly_dir")
-    assembly="$GENOME_DIR/$sample/*"
+    assembly="$GENOME_DIR/$sample"
     sample_dir="$GTDBTK_DIR/$sample"
     mkdir -p "$sample_dir"
 
@@ -40,6 +40,7 @@ for assembly_dir in "$GENOME_DIR"/*; do
     
     gtdbtk classify_wf \
         --genome_dir "$assembly" \
+         --extension fasta \
         --out_dir "$sample_dir" \
         --cpus "$THREADS"
 
@@ -47,3 +48,4 @@ for assembly_dir in "$GENOME_DIR"/*; do
     echo
 done
 conda deactivate
+
