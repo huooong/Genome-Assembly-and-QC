@@ -290,5 +290,10 @@ To run the script.
 ./file_name.sh
 ```
 
+If you want to modify the permissions of a file or directory:
+```bash
+chmod [mode] [File_name]
+```
+If you set mode to 744 => You edit & run; others can read (not execute).
 
 
