@@ -7,7 +7,7 @@ The pipeline is designed to process raw sequencing data, perform quality assessm
 
 ## Repository Contents
 The repository currently contains the following scripts:
-- `Pipeline.sh`: A pipeline script that automates the analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
+- `Pipeline.sh`: A pipeline script that automates the analysis workflow from raw Nanopore FASTQ files through to assembled polished genomes and QC.
 - `Pipeline.sbatch`: Allows you to submit the pipeline as a SLURM job.
 - `GTDB-Tk.sh`: Script for taxonomic assignment using GTDB-Tk.
 - `GTDB-Tk.sbatch`: Allows you to submit the GTDB-Tk script as a SLURM job.
