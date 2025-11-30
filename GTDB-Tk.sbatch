@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=GTDB-Tk
-#SBATCH --output=logs/GTDB-Tk_%j.out
-#SBATCH --error=logs/GTDB-Tk_%j.err
+#SBATCH --output=Logs/GTDB-Tk_%j.out
+#SBATCH --error=Logs/GTDB-Tk_%j.err
 #SBATCH --time=8:00:00
 #SBATCH --cpus-per-task=64
 #SBATCH --mem=150G
