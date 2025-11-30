@@ -4,7 +4,6 @@
 # Directories
 INPUT_DIR="Data"
 OUTPUT_DIR="Results"
-MEDAKA_DIR="$OUTPUT_DIR/Medaka"
 GENOME_DIR="$OUTPUT_DIR/CheckM/Genomes"
 
 # Load conda commands
@@ -23,7 +22,7 @@ echo "---------------------------------------------------"
 conda activate $GTDBTK
 
 ## GTDB-Tk parameters
-GTDBTK_DATA_PATH="/databases/GTDB/gtdb_packages/GTDB-TK_release226_2025_04_11"
+export GTDBTK_DATA_PATH="/databases/GTDB/gtdbtk_packages/GTDB-TK_release226_2025_04_11"
 THREADS=64
 
 ## Directory for GTDB-Tk
@@ -31,19 +30,20 @@ GTDBTK_DIR=$OUTPUT_DIR/GTDB-Tk
 mkdir -p $GTDBTK_DIR
 
 ## Run GTDB-Tk
-for assembly in "$GENOME_DIR/*.fasta"; do
-    sample=$(basename "$assmebly" .fasta)
+for assembly_dir in "$GENOME_DIR"/*; do
+    sample=$(basename "$assembly_dir")
+    assembly="$GENOME_DIR/$sample/*"
     sample_dir="$GTDBTK_DIR/$sample"
     mkdir -p "$sample_dir"
 
     echo "Running GTDB-Tk for $sample ....."
     
     gtdbtk classify_wf \
-        --genome_file "$assembly" \
+        --genome_dir "$assembly" \
         --out_dir "$sample_dir" \
-        --data_path "$GTDBTK_DATA_PATH" \
         --cpus "$THREADS"
 
     echo "Finished $sample"
     echo
 done
+conda deactivate
