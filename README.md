@@ -9,6 +9,8 @@ The pipeline is designed to process raw sequencing data, perform quality assessm
 The repository currently contains the following scripts:
 - `Pipeline.sh`: A pipeline script that automates the analysis workflow from raw Nanopore FASTQ files through to assembled and polished genomes.
 - `Pipeline.sbatch`: Allows you to submit the pipeline as a SLURM job.
+- `GTDB-Tk.sh`: Script for taxonomic assignment using GTDB-Tk.
+- `GTDB-Tk.sbatch`: Allows you to submit the GTDB-Tk script as a SLURM job.
 
 The following modular scripts allow you to run each data processing step independently:
 - `1. Filtering`
@@ -20,9 +22,8 @@ The following modular scripts allow you to run each data processing step indepen
 - `6. QUAST`
 - `7. CheckM`
 - `8. CheckM2`
-- `Annotation` (In progress)
+- `9. Annotation with Bakta` (In progress)
 - `MultiQC` 
-- `GTDB-Tk` (In pregress)
 
 ---
 
@@ -41,27 +42,32 @@ The pipeline performs the following steps:
       - Weighted and non-weighted histogram of read lengths,
       - Length vs. Quality scatter plot,
       - Yield by length plot.
-      - 
-**Genome assembly with Flye**
+        
+**3. Genome assembly with Flye**
    - Assembles genomes from filtered Nanopore reads using the following parameters:
       - Estimated genome size: **5 Mb**.
-      - Threads: **4**.
 
-**Calculating Coverage**  
+**4. Calculating Coverage**  
    - Sequencing coverage for assembled genomes are calculated using minimap2 and samtools.  
 
-**Polish assembly using Medaka**  
-   - Refines assemblies using Medaka with the model:
+**5. Polish assembly using Medaka**  
+   - Refines assemblies using Medaka with the following model:
       - `r1041_e82_400bps_hac_v5.0.0`
 
-**Assembly quality assessment with QUAST**
+**6. Assembly quality assessment with QUAST**
    - Evaluates assembly statistics including N50, genome size, misassemblies, and GC content.
-  
-**Assessment of completeness and contamination with CheckM and CheckM2**
-   - Estimates genome completeness and contamination to assess assembly quality and reliability.
+
+**7. Assessment of completeness and contamination with CheckM and CheckM2**
+   - CheckM estimates genome completeness and contamination based on the presense/absense of marker genes.
+   - CheckM2 uses machine learning models to estimate completeness and contamination.
+
+**8. Gene annotation using Bakta**
 
 **MultiQC**
    - Combines key results and quality metrics from multiple tools into a single, interactive HTML report.
+
+**GTDB-Tk**
+   - Assigns taxonomy.
 
 ---
 ## Directories 
@@ -91,7 +97,6 @@ Each of these subfolders contains one directory per sample, following the same n
 
 ## Setup and How to Run the Pipeline
 1. Download/copy the `Pipeline.sh` and `Pipeline.sbatch` to `Working_Directory`
-
 
 2. Prepare input files.
 Place all raw FASTQ files in the directory `Working_Directory/Data`.
@@ -175,6 +180,11 @@ conda create -n quast_env -c bioconda quast
 conda create -n busco_env -c conda-forge -c bioconda busco=6.0.0
 ```
 
+*CheckM*
+```bash
+conda create -n checkm_env -c bioconda -c conda-forge checkm-genome
+```
+
 *CheckM2*
 ```bash
 conda create -n checkm2_env -c bioconda -c conda-forge checkm2
@@ -182,7 +192,7 @@ conda create -n checkm2_env -c bioconda -c conda-forge checkm2
 
 *Bakta*
 ```bash
-conda create -n bakta1.10.3_env -c conda-forge -c bioconda bakta=1.10.3
+conda create -n bakta_env -c conda-forge -c bioconda bakta
 ```
 
 *MultiQC*
@@ -214,19 +224,18 @@ Before activating conda environment
 ---
 
 ## Software Requirements
-This pipeline relies on several bioinformatics tools and libraries. We recommend using Conda to manage dependencies easily:
+This pipeline relies on several bioinformatics tools and libraries. These versions were employed during analysis.
 - NanoPlot (v1.46.1)
 - Filtlong (v0.2.1)
 - Flye (v2.9.6-b1802)
 - minimap2 (v2.30-r1287)
 - samtools (v1.22.1)
-- racon (v1.5.0)
+- Racon (v1.5.0)
 - QUAST (v5.3.0)
 - Medaka (v2.1.1)
-- CheckM2 (v1.1.0)
-- Bakta (v1.10.3)
-- GTDB-Tk (v2.5.2)
-
+- CheckM2 (v1.1.0) and database (uniref100.KO.1.dmnd)
+- Bakta (v1.11.4) and database (v6.0, 2025-02-24)
+- GTDB-Tk (v2.5.2) and database (release 226, 2025-04-11)
   
 ---
 
@@ -255,8 +264,17 @@ BUSCO:
 Medaka: 
 - https://github.com/nanoporetech/medaka
 
+CheckM:
+- https://github.com/Ecogenomics/CheckM
+
 CheckM2:
 - https://github.com/chklovski/CheckM2/
+
+Bakta:
+- https://github.com/oschwengers/bakta
+
+GTDB-Tk:
+- https://ecogenomics.github.io/GTDBTk/index.html
 
 
 ---
