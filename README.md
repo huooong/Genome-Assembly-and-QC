@@ -194,6 +194,10 @@ conda create -n checkm2_env -c bioconda -c conda-forge checkm2
 ```bash
 conda create -n bakta_env -c conda-forge -c bioconda bakta
 ```
+*AMRFinderPlus*
+```bash
+conda create -y -c conda-forge -c bioconda -n amrfinder --strict-channel-priority ncbi-amrfinderplus
+```
 
 *MultiQC*
 ```bash
