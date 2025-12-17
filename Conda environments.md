@@ -1,11 +1,15 @@
 # Conda Environments
 Conda environments allow you to create isolated spaces with specific packages and versions, avoiding conflicts between projects.
 
+---
+
 ## Check existing environments
 You can check your existing environments using: 
 ```bash
 conda env list
 ```
+
+---
 
 ## Environments used in this project
 If you have not done it yet, you need to create the needed environments: 
