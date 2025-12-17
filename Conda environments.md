@@ -68,3 +68,4 @@ conda create -n bakta_env -c conda-forge -c bioconda bakta
 ```bash
 conda create -n gtdbtk_v2.5.2 -c conda-forge -c bioconda gtdbtk=2.5.2 python=3.12
 ```
+---
