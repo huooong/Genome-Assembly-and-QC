@@ -1,7 +1,7 @@
-# Genome Analysis Pipeline
-This repository contains the data processing workflow developed as part of our 7th semester project, which aims to characterize soil-derived bacterial isolates using Oxford Nanopore sequencing and explore their potential for antibiotic production.
+# Genome Analysis and Quality Check Pipeline
+This repository contains the data processing workflow developed as part of our 7th semester project, which aims to characterise soil-derived bacterial isolates using Oxford Nanopore sequencing and explore their potential for antibiotic production.
 
-The pipeline is designed to process raw sequencing data, perform quality assessments, assemble genomes, polish assemblies, and evaluate final assembly quality.
+The workflow systematically processes raw Nanopore reads through filtering, quality assessment, genome assembly, polishing, and multiple layers of assembly quality evaluation, including completeness and contamination checks. Finally, it performs gene annotation and taxonomic classification to provide a detailed genomic overview.
 
 ---
 
@@ -28,7 +28,8 @@ The following modular scripts allow you to run each data processing step indepen
 ---
 
 ## Workflow Overview
-The pipeline performs the following steps:
+
+The workflow consists of the following steps:
 
 **1. Read filtering using Filtlong**  
    - Filters raw Nanopore reads to improve downstream assembly quality using the following parameters:
@@ -36,7 +37,7 @@ The pipeline performs the following steps:
       - Keep top **90%** highest-quality reads,
       - Trim bases until only the best **500 Mbp** remain.
 
-**2. Quality assessment of raw reads using NanoPlot**
+**2. Quality assessment of reads using NanoPlot**
    - Provides summary statistics and visualisations describing the quality of unfiltered and filtered reads.
    - Generated plots include:
       - Weighted and non-weighted histogram of read lengths,
@@ -47,27 +48,28 @@ The pipeline performs the following steps:
    - Assembles genomes from filtered Nanopore reads using the following parameters:
       - Estimated genome size: **5 Mb**.
 
-**4. Calculating Coverage**  
-   - Sequencing coverage for assembled genomes are calculated using minimap2 and samtools.  
+**4. Coverage calculation**  
+   - Maps filtered reads back to assemblies and calculates sequencing coverage using minimap2 and samtools.  
 
-**5. Polish assembly using Medaka**  
-   - Refines assemblies using Medaka with the following model:
-      - `r1041_e82_400bps_hac_v5.0.0`
+**5. Assembly polishing with Medaka**  
+   - Refines assemblies using Medaka
+      - Model: `r1041_e82_400bps_hac_v5.0.0`
 
 **6. Assembly quality assessment with QUAST**
-   - Evaluates assembly statistics including N50, genome size, misassemblies, and GC content.
+   - Evaluates assembly statistics including number of contigs, N50, contig length, and GC content.
 
 **7. Assessment of completeness and contamination with CheckM and CheckM2**
    - CheckM estimates genome completeness and contamination based on the presense/absense of marker genes.
    - CheckM2 uses machine learning models to estimate completeness and contamination.
 
 **8. Gene annotation using Bakta**
-
+   - Annotates assembled genomes with gene features and functional assignments.
+     
 **MultiQC**
    - Combines key results and quality metrics from multiple tools into a single, interactive HTML report.
 
 **GTDB-Tk**
-   - Assigns taxonomy.
+   - Assigns taxonomy to assemblies based on the Genome Taxonomy Database.
 
 ---
 ## Directories 
