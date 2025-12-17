@@ -104,8 +104,7 @@ Each of these subfolders contains one directory per sample, following the same n
 Place all raw FASTQ files in the directory `Working_Directory/Data`.
 ```bash
 cp -r /raw_data/MA/tinyearth/20251119_np_PBI54877/*.fastq.gz ~/Working_Directory/Data/
-``` 
-Make sure that only the samples you want to analyse are in the `Data` directory. 
+```
 
 3. Go to the terminal, log on, and change to your working directory:
 ```bash
@@ -125,6 +124,12 @@ squeue -u $USER
 ```bash
 tail -f logs/genome_assembly_and_QC_<jobID>.out
 ```
+
+---
+### Databases
+For CheckM2, GTDB-Tk and Bakta, you must specify the path to the corresponding reference databases before running the scripts. These databases are not included in this repository and must be installed separately according to the official tool documentation.
+
+Ensure that the database paths are correctly set in the respective scripts or provided as environment variables prior to execution.
 
 ---
 
